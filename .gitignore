@@ -1,0 +1,42 @@
+# Operating system generated files
+.DS_Store
+Thumbs.db
+
+# IDE or text editor generated files
+.idea/
+.vscode/
+
+
+# Jupyter Notebook checkpoints
+notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Python virtual environments
+venv/
+.env/
+
+# Build output directories
+build/
+dist/
+out/
+
+# Dependency management files
+pip-log.txt
+
+# Environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Machine learning, data analysis output files
+checkpoint/
+
+# packaging
+poetry.lock
+
+# temp files
+temp.txt
