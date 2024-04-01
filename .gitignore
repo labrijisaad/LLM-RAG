@@ -40,3 +40,6 @@ poetry.lock
 
 # temp files
 temp.txt
+
+# Secret files
+secrets/credentials.yml
