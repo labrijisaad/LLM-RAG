@@ -1,0 +1,35 @@
+name: Code Quality Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code-quality-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false  
+        fetch-depth: 0               
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+    - name: Install Python tools (Black with Jupyter, Bandit, Ruff)
+      run: pip install "black[jupyter]" bandit ruff
+    - name: Auto-fix Formatting Issues with Black
+      run: black .
+    - name: Auto-fix Linting Errors with Ruff
+      run: ruff --fix .
+    - name: Security Check with Bandit
+      run: bandit -r .
+    - name: Commit & Push changes
+      uses: actions-js/push@v1.4
+      with:
+        github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
