@@ -1,3 +1,7 @@
 # Add your project dependencies here 
-jupyterlab   # Add jupyterlab as a default requirement
-ipywidgets   # Add ipywidgets as a default requirement
+jupyterlab   
+ipywidgets   
+numpy
+openai
+tqdm
+faiss-cpu
