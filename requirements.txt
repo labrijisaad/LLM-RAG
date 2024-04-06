@@ -5,3 +5,4 @@ numpy
 openai
 tqdm
 faiss-cpu
+pandas
