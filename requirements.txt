@@ -6,3 +6,4 @@ openai
 tqdm
 faiss-cpu
 pandas
+pyyaml

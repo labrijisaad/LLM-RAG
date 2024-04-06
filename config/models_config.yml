@@ -1,0 +1,39 @@
+models:
+  - name: GPT-4 Turbo
+    variants:
+      - model: gpt-4-0125-preview
+        input_price_per_token: 0.00001
+        output_price_per_token: 0.00003
+      - model: gpt-4-1106-preview
+        input_price_per_token: 0.00001
+        output_price_per_token: 0.00003
+      - model: gpt-4-1106-vision-preview
+        input_price_per_token: 0.00001
+        output_price_per_token: 0.00003
+
+  - name: GPT-4
+    variants:
+      - model: gpt-4
+        input_price_per_token: 0.00003
+        output_price_per_token: 0.00006
+      - model: gpt-4-32k
+        input_price_per_token: 0.00006
+        output_price_per_token: 0.00012
+
+  - name: GPT-3.5 Turbo
+    variants:
+      - model: gpt-3.5-turbo-0125
+        input_price_per_token: 0.0000005
+        output_price_per_token: 0.0000015
+      - model: gpt-3.5-turbo-instruct
+        input_price_per_token: 0.0000015
+        output_price_per_token: 0.000002
+
+  - name: Embedding models
+    variants:
+      - model: text-embedding-3-small
+        usage_price_per_token: 0.00000002
+      - model: text-embedding-3-large
+        usage_price_per_token: 0.00000013
+      - model: ada v2
+        usage_price_per_token: 0.0000001
