@@ -6,7 +6,7 @@ def main():
     # Load OpenAI API Key and Model Configurations
     credentials = load_credentials("secrets/credentials.yml")
     openai_api_key = credentials["OPENAI_CREDENTIALS"]
-    models_config = load_models_config("configs/models_config.yml")
+    models_config = load_models_config("config/models_config.yml")
 
     # Initialize the QueryPipeline
     query_pipeline = QueryPipeline(openai_api_key, models_config)
@@ -15,6 +15,8 @@ def main():
     total_cost = query_pipeline.setup_semantic_database(
         markdown_path="data/raw/mock_markdown.md",
         embedding_model="text-embedding-3-small",
+        save_index=True,
+        index_path="data/processed/faiss_index.bin"
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 
@@ -47,9 +49,9 @@ def main():
     print(f"Cost for querying the model for a response: ${response_cost}")
 
     # Output the response
-    print("--------")
+    print("--------\nContextual Prompt:\n--------")
     print(context_enhanced_prompt)
-    print("--------")
+    print("--------\nResponse:\n--------")
     print(contextual_response)
 
 
