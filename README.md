@@ -17,17 +17,17 @@ graph TD
     I -->|Query OpenAI LLM| J[LLM Response]
     J -->|Generate Answer| K[Answer]
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style C fill:#bbf,stroke:#333,stroke-width:2px
-    style D fill:#bbf,stroke:#333,stroke-width:2px
-    style E fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:2px
-    style G fill:#bbf,stroke:#333,stroke-width:2px
-    style H fill:#bbf,stroke:#333,stroke-width:2px
-    style I fill:#fbb,stroke:#333,stroke-width:2px
-    style J fill:#fbb,stroke:#333,stroke-width:2px
-    style K fill:#fbb,stroke:#333,stroke-width:2px
+    style A fill:#7f7f7f,stroke:#fff,stroke-width:2px
+    style B fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style C fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style D fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style E fill:#7f7f7f,stroke:#fff,stroke-width:2px
+    style F fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style G fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style H fill:#8fa1b3,stroke:#fff,stroke-width:2px
+    style I fill:#e07b53,stroke:#fff,stroke-width:2px
+    style J fill:#e07b53,stroke:#fff,stroke-width:2px
+    style K fill:#e07b53,stroke:#fff,stroke-width:2px
 ```
 
 ## Connect with me 🌐
