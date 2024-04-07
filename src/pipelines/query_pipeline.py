@@ -9,11 +9,21 @@ class QueryPipeline:
             openai_api_key, models_config
         )
 
-    def setup_semantic_database(self, markdown_path, embedding_model):
+    def set_model(self, model_name):
+        """
+        Sets the model for both the embedder and model inference manager.
+        
+        Parameters:
+        model_name (str): The name of the model to be set.
+        """
+        # Set the model for the SemanticVectorizer
+        self.embedder.set_model(model_name)
+
+
+    def setup_semantic_database(self, markdown_path, embedding_model, save_index=False, index_path=None):
         self.embedder.set_model(embedding_model)
         self.embedder.read_and_process_markdown(markdown_path)
-        total_cost = self.embedder.generate_embeddings()
-        self.embedder.create_faiss_index()
+        total_cost = self.embedder.generate_embeddings(save_index=save_index, index_path=index_path)
         return total_cost
 
     def find_similar_documents(self, query_text, num_results):
@@ -57,3 +67,11 @@ class QueryPipeline:
             response_cost = self.model_inference_manager.calculate_cost(response_usage)
 
         return contextual_response, response_cost
+
+    def load_faiss_index(self, index_path):
+        """Loads the FAISS index from a specified path."""
+        try:
+            self.embedder.load_faiss_index(index_path)
+            print(f"FAISS index loaded successfully from {index_path}.")
+        except Exception as e:
+            print(f"Error loading FAISS index: {e}")
