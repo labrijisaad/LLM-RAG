@@ -35,7 +35,7 @@ class ModelInferenceManager:
         }
 
         try:
-            response = requests.post(url, headers=headers, json=payload)
+            response = requests.post(url, headers=headers, json=payload, timeout=60)
             if response.status_code == 200:
                 data = response.json()
                 content = data["choices"][0]["message"]["content"]

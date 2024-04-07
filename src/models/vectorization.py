@@ -54,7 +54,7 @@ class SemanticVectorizer:
             "input": preprocessed_text,
             "model": self.model,
         }
-        response = requests.post(url, headers=headers, json=payload)
+        response = requests.post(url, headers=headers, json=payload, timeout=60)
         if response.status_code == 200:
             data = response.json()
             embedding = np.array(data["data"][0]["embedding"], dtype="float32")
