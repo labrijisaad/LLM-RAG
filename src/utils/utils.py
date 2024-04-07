@@ -1,5 +1,6 @@
 import yaml
 
+
 def load_credentials(credentials_path):
     """
     Load credentials from a YAML file.

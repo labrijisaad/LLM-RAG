@@ -1,6 +1,7 @@
 from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
 
+
 def main():
     # Load OpenAI API Key and Model Configurations
     credentials = load_credentials("secrets/credentials.yml")
@@ -50,6 +51,7 @@ def main():
     print(context_enhanced_prompt)
     print("--------")
     print(contextual_response)
+
 
 if __name__ == "__main__":
     main()

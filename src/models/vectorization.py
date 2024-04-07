@@ -5,6 +5,7 @@ import re
 
 from tqdm.auto import tqdm
 
+
 class SemanticVectorizer:
     def __init__(self, api_key, models_config):
         self.api_key = api_key
@@ -48,7 +49,7 @@ class SemanticVectorizer:
 
     def query_openai_embedding(self, text):
         preprocessed_text = self.preprocess_text(text)
-        url = f"https://api.openai.com/v1/embeddings"
+        url = "https://api.openai.com/v1/embeddings"
         headers = {"Authorization": f"Bearer {self.api_key}"}
         payload = {
             "input": preprocessed_text,

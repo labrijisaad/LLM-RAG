@@ -1,6 +1,6 @@
-
 from ..models.inference import ModelInferenceManager
 from ..models.vectorization import SemanticVectorizer
+
 
 class QueryPipeline:
     def __init__(self, openai_api_key, models_config):

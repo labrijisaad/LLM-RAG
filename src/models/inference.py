@@ -1,7 +1,6 @@
 import requests
 
 
-
 class ModelInferenceManager:
     def __init__(self, api_key, models_config):
         self.api_key = api_key
