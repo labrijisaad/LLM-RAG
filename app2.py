@@ -1,6 +1,7 @@
 from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
 
+
 def main():
     # Load OpenAI API Key and Model Configurations
     credentials = load_credentials("secrets/credentials.yml")
@@ -16,7 +17,7 @@ def main():
     # Load the semantic database FAISS index
     index_path = "data/processed/faiss_index.bin"
     query_pipeline.load_faiss_index(index_path)
-    
+
     # Example query
     user_query = input("Enter your query: ")
 
@@ -48,6 +49,7 @@ def main():
     print(context_enhanced_prompt)
     print("--------\nResponse:\n--------")
     print(contextual_response)
+
 
 if __name__ == "__main__":
     main()

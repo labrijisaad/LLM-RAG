@@ -16,7 +16,7 @@ def main():
         markdown_path="data/raw/mock_markdown.md",
         embedding_model="text-embedding-3-small",
         save_index=True,
-        index_path="data/processed/faiss_index.bin"
+        index_path="data/processed/faiss_index.bin",
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 

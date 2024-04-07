@@ -78,7 +78,7 @@ class SemanticVectorizer:
 
         if save_index and index_path:
             self.save_faiss_index(index_path)
-        
+
         return total_cost
 
     def create_faiss_index(self):
