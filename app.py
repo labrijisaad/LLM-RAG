@@ -11,12 +11,13 @@ def main():
     # Initialize the QueryPipeline
     query_pipeline = QueryPipeline(openai_api_key, models_config)
 
-    # Set up the semantic database (example path and model)
+    # Directory to save index and texts
+    output_directory = "data/processed"
     total_cost = query_pipeline.setup_semantic_database(
         markdown_path="data/raw/mock_markdown.md",
         embedding_model="text-embedding-3-small",
         save_index=True,
-        index_path="data/processed/faiss_index.bin",
+        directory_path=output_directory
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 
