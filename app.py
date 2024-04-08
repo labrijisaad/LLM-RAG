@@ -17,6 +17,7 @@ def main():
         embedding_model="text-embedding-3-small",
         save_index=True,
         index_path="data/processed/faiss_index.bin",
+        texts_path="data/processed/texts.json"  # Specify where to save the texts
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 

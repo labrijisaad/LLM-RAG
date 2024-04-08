@@ -1,6 +1,7 @@
 import numpy as np
 import requests
 import faiss
+import json
 import re
 
 from tqdm.auto import tqdm
@@ -66,7 +67,7 @@ class SemanticVectorizer:
             )
             return None, None
 
-    def generate_embeddings(self, save_index=False, index_path=None):
+    def generate_embeddings(self, save_index=False, index_path=None, texts_path=None):
         total_cost = 0
         for text in tqdm(self.texts):
             embedding, usage = self.query_openai_embedding(text)
@@ -78,8 +79,19 @@ class SemanticVectorizer:
 
         if save_index and index_path:
             self.save_faiss_index(index_path)
+            if texts_path:  # Save texts at specified path
+                with open(texts_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.texts, f)
 
         return total_cost
+
+    def load_texts(self, texts_path):
+        """Loads texts from a specified path."""
+        try:
+            with open(texts_path, 'r', encoding='utf-8') as f:
+                self.texts = json.load(f)
+        except Exception as e:
+            print(f"Error loading texts: {e}")
 
     def create_faiss_index(self):
         if self.embeddings.size > 0:
@@ -115,3 +127,4 @@ class SemanticVectorizer:
         total_tokens = usage.get("total_tokens", 0)
         total_price = total_tokens * self.usage_price_per_token
         return total_price
+    

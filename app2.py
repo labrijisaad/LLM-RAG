@@ -14,16 +14,18 @@ def main():
     # Set the model
     query_pipeline.set_model("text-embedding-3-small")
 
-    # Load the semantic database FAISS index
+    # Load the semantic database FAISS index and the texts
     index_path = "data/processed/faiss_index.bin"
+    texts_path = "data/processed/texts.json"
     query_pipeline.load_faiss_index(index_path)
+    query_pipeline.embedder.load_texts(texts_path)
 
     # Example query
     user_query = input("Enter your query: ")
 
     # Proceed with the rest of the querying process
     similar_docs = query_pipeline.find_similar_documents(
-        query_text=user_query, num_results=3
+        query_text=user_query, num_results=2
     )
 
     context_enhanced_prompt, expertise_area_cost = (

@@ -19,14 +19,21 @@ class QueryPipeline:
         # Set the model for the SemanticVectorizer
         self.embedder.set_model(model_name)
 
-    def setup_semantic_database(
-        self, markdown_path, embedding_model, save_index=False, index_path=None
-    ):
+    def setup_semantic_database(self, markdown_path, embedding_model, save_index=False, index_path=None, texts_path=None):
+        # Set the embedding model
         self.embedder.set_model(embedding_model)
+        
+        # Process markdown to prepare texts
         self.embedder.read_and_process_markdown(markdown_path)
+        
+        # Generate embeddings and calculate the total cost for embedding generation
         total_cost = self.embedder.generate_embeddings(
-            save_index=save_index, index_path=index_path
+            save_index=save_index, 
+            index_path=index_path, 
+            texts_path=texts_path
         )
+        
+        # Return the total cost for embedding generation
         return total_cost
 
     def find_similar_documents(self, query_text, num_results):
@@ -75,6 +82,5 @@ class QueryPipeline:
         """Loads the FAISS index from a specified path."""
         try:
             self.embedder.load_faiss_index(index_path)
-            print(f"FAISS index loaded successfully from {index_path}.")
         except Exception as e:
             print(f"Error loading FAISS index: {e}")
