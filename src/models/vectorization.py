@@ -1,4 +1,6 @@
 import numpy as np
+import datetime
+import os
 import requests
 import faiss
 import json
@@ -114,11 +116,16 @@ class SemanticVectorizer:
         )
         return [self.texts[idx] for idx in indices[0] if idx < len(self.texts)]
 
-    def save_faiss_index(self, index_path):
+    def save_faiss_index(self, index_path, texts_path):
+        # Save the FAISS index
         if self.faiss_index:
             faiss.write_index(self.faiss_index, index_path)
-        else:
-            print("FAISS index is not initialized.")
+            print(f"FAISS index saved successfully to {index_path}.")
+
+        # Save the texts
+        with open(texts_path, 'w', encoding='utf-8') as f:
+            json.dump(self.texts, f)
+        print(f"Texts saved successfully to {texts_path}.")
 
     def load_faiss_index(self, index_path):
         self.faiss_index = faiss.read_index(index_path)
@@ -127,4 +134,4 @@ class SemanticVectorizer:
         total_tokens = usage.get("total_tokens", 0)
         total_price = total_tokens * self.usage_price_per_token
         return total_price
-    
+
