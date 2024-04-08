@@ -1,6 +1,7 @@
 from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
 
+
 def main():
     # Load OpenAI API Key and Model Configurations
     credentials = load_credentials("secrets/credentials.yml")
@@ -23,7 +24,9 @@ def main():
     user_query = input("Enter your query: ")
 
     # Proceed with the rest of the querying process
-    similar_docs = query_pipeline.find_similar_documents(query_text=user_query, num_results=2)
+    similar_docs = query_pipeline.find_similar_documents(
+        query_text=user_query, num_results=2
+    )
 
     context_enhanced_prompt, expertise_area_cost = (
         query_pipeline.determine_expertise_and_prepare_prompt(
@@ -48,6 +51,7 @@ def main():
     print(context_enhanced_prompt)
     print("--------\nResponse:\n--------")
     print(contextual_response)
+
 
 if __name__ == "__main__":
     main()

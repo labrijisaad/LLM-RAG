@@ -1,6 +1,4 @@
 import numpy as np
-import datetime
-import os
 import requests
 import faiss
 import json
@@ -82,7 +80,7 @@ class SemanticVectorizer:
         if save_index and index_path:
             self.save_faiss_index(index_path)
             if texts_path:  # Save texts at specified path
-                with open(texts_path, 'w', encoding='utf-8') as f:
+                with open(texts_path, "w", encoding="utf-8") as f:
                     json.dump(self.texts, f)
 
         return total_cost
@@ -90,7 +88,7 @@ class SemanticVectorizer:
     def load_texts(self, texts_path):
         """Loads texts from a specified path."""
         try:
-            with open(texts_path, 'r', encoding='utf-8') as f:
+            with open(texts_path, "r", encoding="utf-8") as f:
                 self.texts = json.load(f)
         except Exception as e:
             print(f"Error loading texts: {e}")
@@ -123,7 +121,7 @@ class SemanticVectorizer:
             print(f"FAISS index saved successfully to {index_path}.")
 
         # Save the texts
-        with open(texts_path, 'w', encoding='utf-8') as f:
+        with open(texts_path, "w", encoding="utf-8") as f:
             json.dump(self.texts, f)
         print(f"Texts saved successfully to {texts_path}.")
 
@@ -134,4 +132,3 @@ class SemanticVectorizer:
         total_tokens = usage.get("total_tokens", 0)
         total_price = total_tokens * self.usage_price_per_token
         return total_price
-

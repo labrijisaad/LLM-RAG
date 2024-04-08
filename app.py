@@ -17,7 +17,7 @@ def main():
         markdown_path="data/raw/mock_markdown.md",
         embedding_model="text-embedding-3-small",
         save_index=True,
-        directory_path=output_directory
+        directory_path=output_directory,
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 

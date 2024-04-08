@@ -1,10 +1,8 @@
 import numpy as np
 import datetime
 import os
-import requests
 import faiss
 import json
-import re
 
 from ..models.inference import ModelInferenceManager
 from ..models.vectorization import SemanticVectorizer
@@ -13,13 +11,17 @@ from ..models.vectorization import SemanticVectorizer
 class QueryPipeline:
     def __init__(self, openai_api_key, models_config):
         self.embedder = SemanticVectorizer(openai_api_key, models_config)
-        self.model_inference_manager = ModelInferenceManager(openai_api_key, models_config)
+        self.model_inference_manager = ModelInferenceManager(
+            openai_api_key, models_config
+        )
 
     def set_model(self, model_name):
         self.embedder.set_model(model_name)
         # Assuming you might also need to set the model in ModelInferenceManager if necessary.
 
-    def setup_semantic_database(self, markdown_path, embedding_model, save_index=False, directory_path=None):
+    def setup_semantic_database(
+        self, markdown_path, embedding_model, save_index=False, directory_path=None
+    ):
         # Ensure the embedding model is set
         self.embedder.set_model(embedding_model)
 
@@ -30,11 +32,15 @@ class QueryPipeline:
         timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         index_filename = f"faiss_db_{timestamp}.bin"
         texts_filename = f"faiss_db_{timestamp}.json"
-        
+
         # Generate full file paths
-        index_path = os.path.join(directory_path, index_filename) if directory_path else None
-        texts_path = os.path.join(directory_path, texts_filename) if directory_path else None
-        
+        index_path = (
+            os.path.join(directory_path, index_filename) if directory_path else None
+        )
+        texts_path = (
+            os.path.join(directory_path, texts_filename) if directory_path else None
+        )
+
         # Generate embeddings and calculate the total cost
         total_cost = self.embedder.generate_embeddings()
 
@@ -110,18 +116,22 @@ class QueryPipeline:
                     faiss_index = faiss.read_index(index_path)
                     print(f"Loaded FAISS index from {index_path}.")
 
-                    with open(texts_path, 'r', encoding='utf-8') as f:
+                    with open(texts_path, "r", encoding="utf-8") as f:
                         texts = json.load(f)
                         print(f"Loaded texts from {texts_path}.")
 
-                    embeddings = np.zeros((faiss_index.ntotal, faiss_index.d), dtype='float32')
+                    embeddings = np.zeros(
+                        (faiss_index.ntotal, faiss_index.d), dtype="float32"
+                    )
                     for i in range(faiss_index.ntotal):
                         embeddings[i, :] = faiss_index.reconstruct(i)
 
                     all_texts.extend(texts)
                     all_embeddings.append(embeddings)
                 else:
-                    print(f"Warning: Required files for {filename} are missing. Skipping.")
+                    print(
+                        f"Warning: Required files for {filename} are missing. Skipping."
+                    )
 
         # Handle the case with zero or one database file
         if len(all_embeddings) == 0:
@@ -140,4 +150,3 @@ class QueryPipeline:
             self.embedder.faiss_index = combined_index
             self.embedder.texts = all_texts
             print("Databases merged successfully.")
-
