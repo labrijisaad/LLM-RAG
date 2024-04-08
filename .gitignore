@@ -43,3 +43,9 @@ temp.txt
 
 # Secret files
 secrets/credentials.yml
+
+# generated text files
+data/processed/*.text
+
+# generated bin files
+data/processed/*.bin
