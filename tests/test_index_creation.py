@@ -2,6 +2,7 @@ from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
 import os
 
+
 def test_index_creation(tmpdir):
     output_directory = tmpdir.strpath
     credentials = load_credentials("secrets/credentials.yml")
@@ -16,7 +17,7 @@ def test_index_creation(tmpdir):
         save_index=True,
         directory_path=output_directory,
     )
-    
+
     # Check if the total cost is a float number
     assert isinstance(total_cost, float)
 

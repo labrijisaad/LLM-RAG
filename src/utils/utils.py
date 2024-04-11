@@ -6,10 +6,10 @@ def load_credentials(credentials_path="secrets/credentials.yml"):
     """
     Load credentials from the environment or a YAML file. ( depends on the environment )
     """
-    openai_api_key = os.getenv('OPENAI_API_KEY')
+    openai_api_key = os.getenv("OPENAI_API_KEY")
     if openai_api_key:
-        return {'OPENAI_CREDENTIALS': openai_api_key}
-    
+        return {"OPENAI_CREDENTIALS": openai_api_key}
+
     with open(credentials_path, "r") as credentials_file:
         return yaml.safe_load(credentials_file)
 
