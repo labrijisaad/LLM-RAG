@@ -44,8 +44,10 @@ temp.txt
 # Secret files
 secrets/credentials.yml
 
-# generated text files
-data/processed/*.text
+# generated json files
+data/processed/*.json
+!data/processed/faiss_db_mock_markdown.json
 
 # generated bin files
 data/processed/*.bin
+!data/processed/faiss_db_mock_markdown.bin

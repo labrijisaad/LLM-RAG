@@ -47,11 +47,17 @@ jupy:
 	@echo ">>>>>> Jupyter Lab is running <<<<<<"
 
 app:
+	@$(VENV_ACTIVATE)
 	@python app.py
+
+test:
+	@$(VENV_ACTIVATE)
+	@pytest tests/
 
 # Display available make targets
 help:
 	@echo Available targets:
 	@echo   make jupy                                             - Activate the virtual environment and run Jupyter Lab
+	@echo   make test                                             - Tests the code using pytest
 	@echo   make app                                              - Runs the App
 	@echo Author: $(AUTHOR)

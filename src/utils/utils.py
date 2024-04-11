@@ -1,16 +1,15 @@
 import yaml
+import os
 
 
-def load_credentials(credentials_path):
+def load_credentials(credentials_path="secrets/credentials.yml"):
     """
-    Load credentials from a YAML file.
-
-    Parameters:
-    credentials_path (str): The file path to the credentials YAML file.
-
-    Returns:
-    dict: The loaded credentials.
+    Load credentials from the environment or a YAML file. ( depends on the environment )
     """
+    openai_api_key = os.getenv('OPENAI_API_KEY')
+    if openai_api_key:
+        return {'OPENAI_CREDENTIALS': openai_api_key}
+    
     with open(credentials_path, "r") as credentials_file:
         return yaml.safe_load(credentials_file)
 
