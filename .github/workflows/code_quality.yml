@@ -29,7 +29,7 @@ jobs:
     - name: Auto-fix Linting Errors with Ruff
       run: ruff --fix .
     - name: Security Check with Bandit
-      run: bandit -r .
+      run: bandit -r . --exclude ./tests/
     - name: Commit & Push changes
       uses: actions-js/push@v1.4
       with:
