@@ -20,7 +20,12 @@ class QueryPipeline:
         # Assuming you might also need to set the model in ModelInferenceManager if necessary.
 
     def setup_semantic_database(
-        self, markdown_path=None,embedding_model=None, save_index=False, directory_path=None, markdown_content=None
+        self,
+        markdown_path=None,
+        embedding_model=None,
+        save_index=False,
+        directory_path=None,
+        markdown_content=None,
     ):
         # Ensure the embedding model is set
         self.embedder.set_model(embedding_model)
@@ -28,7 +33,10 @@ class QueryPipeline:
         # Check if content is directly provided, otherwise read from the path
         if markdown_content:
             # Directly use provided markdown content
-            self.embedder.texts = [self.embedder.preprocess_text(text) for text in markdown_content.split("\n\n")]
+            self.embedder.texts = [
+                self.embedder.preprocess_text(text)
+                for text in markdown_content.split("\n\n")
+            ]
         elif markdown_path:
             # Read and process markdown file if path is provided
             self.embedder.read_and_process_markdown(markdown_path)
@@ -39,8 +47,12 @@ class QueryPipeline:
         texts_filename = f"faiss_db_{timestamp}.json"
 
         # Generate full file paths
-        index_path = os.path.join(directory_path, index_filename) if directory_path else None
-        texts_path = os.path.join(directory_path, texts_filename) if directory_path else None
+        index_path = (
+            os.path.join(directory_path, index_filename) if directory_path else None
+        )
+        texts_path = (
+            os.path.join(directory_path, texts_filename) if directory_path else None
+        )
 
         # Generate embeddings and calculate the total cost
         total_cost = self.embedder.generate_embeddings()

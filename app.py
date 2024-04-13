@@ -18,7 +18,7 @@ def main():
         embedding_model="text-embedding-3-small",
         save_index=True,
         directory_path=output_directory,
-        markdown_content=""
+        markdown_content="",
     )
     print(f"Total cost for setting up the semantic database: ${total_cost}")
 
