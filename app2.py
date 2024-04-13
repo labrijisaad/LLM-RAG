@@ -25,7 +25,7 @@ def main():
 
     # Proceed with the rest of the querying process
     similar_docs = query_pipeline.find_similar_documents(
-        query_text=user_query, num_results=2
+        query_text=user_query, num_results=4
     )
 
     context_enhanced_prompt, expertise_area_cost = (
