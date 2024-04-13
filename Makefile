@@ -50,6 +50,14 @@ app:
 	@$(VENV_ACTIVATE)
 	@python app.py
 
+app2:
+	@$(VENV_ACTIVATE)
+	@python app2.py
+
+stream:
+	@$(VENV_ACTIVATE)
+	@streamlit run .\streamlit_app.py
+
 test:
 	@$(VENV_ACTIVATE)
 	@pytest tests/
@@ -60,4 +68,6 @@ help:
 	@echo   make jupy                                             - Activate the virtual environment and run Jupyter Lab
 	@echo   make test                                             - Tests the code using pytest
 	@echo   make app                                              - Runs the App
+	@echo   make app2                                             - Runs the App2
+	@echo   make stream                                           - Runs the streamlit app
 	@echo Author: $(AUTHOR)
