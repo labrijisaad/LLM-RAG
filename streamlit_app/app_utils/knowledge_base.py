@@ -3,10 +3,10 @@ from src.pipelines.query_pipeline import QueryPipeline
 from .others import read_file_content
 
 
-def setup_database(openai_api_key, models_config, selected_embedding_model):
-    st.header("Setup Database")
+def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_model):
+    st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
-        "Upload markdown files:",
+        "Upload :red[Markdown] Files:", 
         type=["md"],
         accept_multiple_files=True,
         help="Upload markdown files for processing.",
@@ -18,11 +18,10 @@ def setup_database(openai_api_key, models_config, selected_embedding_model):
 
         markdown_content = ""
         for uploaded_file in uploaded_files:
-            with st.expander(f"View Content of **`{uploaded_file.name}`**"):
+            with st.expander(f"👀 View Content of **`{uploaded_file.name}`** file"):
                 file_content = read_file_content(uploaded_file)
                 markdown_content += file_content + "\n"
-                st.markdown("### File Content Preview 👀")
-                st.code(file_content, language="markdown")
+                st.text(file_content)
 
         query_pipeline = QueryPipeline(openai_api_key, models_config)
         # Directory to save index and texts
@@ -43,18 +42,23 @@ def setup_database(openai_api_key, models_config, selected_embedding_model):
         st.info("Upload markdown files to proceed with database setup.")
 
 
-def view_database(all_texts):
-    st.header("View Content of the Knowledge Base")
+def display_knowledge_base_tab(all_texts):
+    st.header("🔍Explore the :green[Knowledge Base] Content")
     if len(all_texts) == 0:
         st.warning(
             "No databases were loaded. Please go to the 'Setup Database' tab to create your knowledge base."
         )
     else:
         # Display basic info about the Knowledge Base
-        st.markdown(f"- :red[Total Documents] in Knowledge Base `{len(all_texts)}`")
+        st.markdown(f"📜 :red[Total Documents] in Knowledge Base `{len(all_texts)}`")
 
         # Search box for filtering texts
-        search_query = st.text_input("Search by keyword", "")
+        search_query = st.text_input(
+            "Enter a search keyword  ( :red[Note: A maximum of **10** documents will be displayed] )",
+            "",
+            placeholder="Type here...",
+            help="Search the knowledge base by keyword. The search results are limited to the top 10 documents."
+        )
         if search_query:
             # Filter texts and sort by the number of occurrences of the search query
             filtered_texts = sorted(
@@ -65,7 +69,7 @@ def view_database(all_texts):
                 ],
                 key=lambda x: x[1],
                 reverse=True,
-            )[:5]
+            )[:10]
 
             # Check if any texts match the query
             if not filtered_texts:

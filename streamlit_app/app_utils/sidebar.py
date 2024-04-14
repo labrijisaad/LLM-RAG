@@ -4,7 +4,7 @@ from PIL import Image
 from app_utils.others import get_embedding_models, get_llm_models, image_to_base64
 
 
-def setup_sidebar(models_config):
+def configure_sidebar(models_config):
     logo = Image.open("./streamlit_app/app_logo.png")
     st.sidebar.markdown(
         f'<div style="text-align: center;"><a href="https://github.com/labrijisaad"><img src="data:image/png;base64,{image_to_base64(logo)}" alt="Direct Assurance Logo" width="100"></a></div>',
@@ -18,7 +18,7 @@ def setup_sidebar(models_config):
     selected_embedding_model = st.sidebar.selectbox(
         "Choose the embedding model",
         model_names,
-        help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.",
+        help="Choose from available OpenAI embedding models. Model choice affects result quality, inference time, and cost per query.",
     )
     selected_embedding_model_price = model_prices[selected_embedding_model]
     st.sidebar.markdown(f"Selected Model: **`{selected_embedding_model}`**")
@@ -35,7 +35,7 @@ def setup_sidebar(models_config):
     selected_llm_model = st.sidebar.selectbox(
         "Choose the LLM model",
         llm_model_names,
-        help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.",
+        help="Choose from available OpenAI LLMs. Model choice affects result quality, inference time, and cost per query.",
     )
     st.sidebar.markdown(f"Selected Model: **`{selected_llm_model}`**")
     st.sidebar.markdown(
@@ -52,20 +52,20 @@ def setup_sidebar(models_config):
         max_value=1.0,
         value=0.7,
         step=0.01,
-        help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
+        help="Control the model's creativity. Higher values yield more varied, unpredictable responses, while lower values are more deterministic.",
     )
     st.sidebar.markdown(f"Selected Temperature: **`{selected_llm_temperature}`**")
     # Sidebar configuration - Max Completion Tokens Setting
     st.sidebar.title("⚡ Max Completion Tokens")
-    selected_max_llm_tokens_completion = st.sidebar.slider(
+    selected_llm_max_tokens_completion = st.sidebar.slider(
         "Select the LLM Max Completion Tokens",
         min_value=50,
         value=500,
-        max_value=1500,
-        help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
+        max_value=3500,
+        help="Set the max number of tokens for LLM to generate. Affects response length and processing time.",
     )
     st.sidebar.markdown(
-        f"Selected Max Completion Tokens: **`{selected_max_llm_tokens_completion}`**"
+        f"Selected Max Completion Tokens: **`{selected_llm_max_tokens_completion}`**"
     )
 
     # Sidebar configuration - Quick Links
@@ -86,5 +86,5 @@ def setup_sidebar(models_config):
         selected_embedding_model_price,
         selected_llm_model,
         selected_llm_temperature,
-        selected_max_llm_tokens_completion,
+        selected_llm_max_tokens_completion,
     )
