@@ -1,10 +1,13 @@
 import base64
 from io import BytesIO
+
+
 def image_to_base64(image):
     img_buffer = BytesIO()
     image.save(img_buffer, format="PNG")
     img_base64 = base64.b64encode(img_buffer.getvalue()).decode()
     return img_base64
+
 
 def read_file_content(uploaded_file):
     """Function to read and decode the uploaded file."""

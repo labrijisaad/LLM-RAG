@@ -1,11 +1,17 @@
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import streamlit as st
 from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
-from utils import get_embedding_models, get_llm_models, read_file_content, image_to_base64
+from utils import (
+    get_embedding_models,
+    get_llm_models,
+    read_file_content,
+    image_to_base64,
+)
 from PIL import Image
 
 
@@ -29,7 +35,11 @@ def main():
     embedding_model_info = get_embedding_models(models_config)
     model_names = [model[0] for model in embedding_model_info]
     model_prices = {model[0]: model[1] for model in embedding_model_info}
-    selected_embedding_model = st.sidebar.selectbox("Choose the embedding model", model_names, help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.")
+    selected_embedding_model = st.sidebar.selectbox(
+        "Choose the embedding model",
+        model_names,
+        help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.",
+    )
     selected_embedding_model_price = model_prices[selected_embedding_model]
     st.sidebar.markdown(f"Selected Model: **`{selected_embedding_model}`**")
     st.sidebar.markdown(
@@ -42,7 +52,11 @@ def main():
     llm_model_names = [model[0] for model in llm_model_info]
     llm_input_prices = {model[0]: model[1] for model in llm_model_info}
     llm_output_prices = {model[0]: model[2] for model in llm_model_info}
-    selected_llm_model = st.sidebar.selectbox("Choose the LLM model", llm_model_names, help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.")
+    selected_llm_model = st.sidebar.selectbox(
+        "Choose the LLM model",
+        llm_model_names,
+        help="Sélectionnez parmi les modèles d'OpenAI disponibles. Le choix du modèle affecte la qualité des résultats, le temps d'inférence et le coût associé à chaque requête.",
+    )
     st.sidebar.markdown(f"Selected Model: **`{selected_llm_model}`**")
     st.sidebar.markdown(
         f"Input price per **1K tokens**: **`{llm_input_prices[selected_llm_model]*1000:.4f} $`**"
@@ -52,14 +66,21 @@ def main():
     )
     st.sidebar.title("🔥 Model Temperature")
     temperature = st.sidebar.slider(
-        "Select the LLM temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.01,
-         help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
+        "Select the LLM temperature",
+        min_value=0.0,
+        max_value=1.0,
+        value=0.7,
+        step=0.01,
+        help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
     )
     st.sidebar.markdown(f"Selected Temperature: **`{temperature}`**")
     st.sidebar.title("⚡ Max Completion Tokens")
     max_tokens = st.sidebar.slider(
-        "Select the LLM Max Completion Tokens", min_value=50, value=500, max_value=1500,
-         help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
+        "Select the LLM Max Completion Tokens",
+        min_value=50,
+        value=500,
+        max_value=1500,
+        help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
     )
     st.sidebar.markdown(f"Selected Max Completion Tokens: **`{max_tokens}`**")
 
@@ -74,10 +95,12 @@ def main():
         
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
-    tab1, tab3, tab2 = st.tabs(["Knowledge Base Setup", "View Knowledge Base","RAG Query"])
+    tab1, tab3, tab2 = st.tabs(
+        ["Knowledge Base Setup", "View Knowledge Base", "RAG Query"]
+    )
 
     with tab1:
         st.header("Setup Database")
@@ -128,18 +151,20 @@ def main():
 
     with tab3:
         st.header("View Content of the Knowledge Base")
-        
+
         # Create an instance of the QueryPipeline and load the knowledge base
         query_pipeline = QueryPipeline(openai_api_key, models_config)
         query_pipeline.set_model(selected_embedding_model)
         directory_path = "data/processed"
         query_pipeline.load_and_merge_databases(directory_path)
-        
+
         # Load texts and remove any empty strings
         all_texts = [text for text in query_pipeline.embedder.texts if text.strip()]
 
         if len(all_texts) == 0:
-            st.warning("No databases were loaded. Please go to the 'Setup Database' tab to create your knowledge base.")
+            st.warning(
+                "No databases were loaded. Please go to the 'Setup Database' tab to create your knowledge base."
+            )
         else:
             # Display basic info about the Knowledge Base
             st.markdown(f"- :red[Total Documents] in Knowledge Base `{len(all_texts)}`")
@@ -149,9 +174,13 @@ def main():
             if search_query:
                 # Filter texts and sort by the number of occurrences of the search query
                 filtered_texts = sorted(
-                    [(text, text.lower().count(search_query.lower())) for text in all_texts if search_query.lower() in text.lower()],
+                    [
+                        (text, text.lower().count(search_query.lower()))
+                        for text in all_texts
+                        if search_query.lower() in text.lower()
+                    ],
                     key=lambda x: x[1],
-                    reverse=True
+                    reverse=True,
                 )[:5]
 
                 # Check if any texts match the query
@@ -165,7 +194,7 @@ def main():
                         with col2:
                             with st.expander(f"Text {index} Preview", expanded=True):
                                 st.text(text[:75] + "...")  # Show preview of the text
-                                if st.button('Show More', key=f"more_{index}"):
+                                if st.button("Show More", key=f"more_{index}"):
                                     st.text_area("Full Text", text, height=130)
             else:
                 filtered_texts = []
