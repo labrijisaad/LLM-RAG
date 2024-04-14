@@ -1,11 +1,8 @@
 import streamlit as st
 
 from PIL import Image
-from app_utils.others import (
-    get_embedding_models,
-    get_llm_models,
-    image_to_base64
-)
+from app_utils.others import get_embedding_models, get_llm_models, image_to_base64
+
 
 def setup_sidebar(models_config):
     logo = Image.open("./streamlit_app/app_logo.png")
@@ -67,7 +64,9 @@ def setup_sidebar(models_config):
         max_value=1500,
         help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
     )
-    st.sidebar.markdown(f"Selected Max Completion Tokens: **`{selected_max_llm_tokens_completion}`**")
+    st.sidebar.markdown(
+        f"Selected Max Completion Tokens: **`{selected_max_llm_tokens_completion}`**"
+    )
 
     # Sidebar configuration - Quick Links
     st.sidebar.title("🌐 Connect with Me")
@@ -82,8 +81,10 @@ def setup_sidebar(models_config):
         """,
         unsafe_allow_html=True,
     )
-    return (selected_embedding_model,
-            selected_embedding_model_price, 
-            selected_llm_model,
-            selected_llm_temperature,
-            selected_max_llm_tokens_completion)
+    return (
+        selected_embedding_model,
+        selected_embedding_model_price,
+        selected_llm_model,
+        selected_llm_temperature,
+        selected_max_llm_tokens_completion,
+    )
