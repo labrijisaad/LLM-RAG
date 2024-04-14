@@ -52,7 +52,10 @@ def main():
     # Tab for setting up the Knowledge Base
     with setup_kb_tab:
         setup_knowledge_base_tab(
-            query_pipeline, selected_embedding_model_name, knowledge_base_dir
+            query_pipeline,
+            selected_embedding_model_name,
+            knowledge_base_dir,
+            selected_embedding_model_cost,
         )
 
     # Tab for displaying and exploring the Knowledge Base

@@ -26,7 +26,7 @@ def configure_sidebar(models_config, output_directory):
         f"Selected **Embedding Model**: **`{selected_embedding_model}`**"
     )
     st.sidebar.markdown(
-        f"Price per **1M token**: **`{selected_embedding_model_price*1000000:.2f} $`**"
+        f"Price per **:red[1M token]**  **`{selected_embedding_model_price*1000000:.2f} $`**"
     )
 
     # Sidebar configuration - LLMs Settings
@@ -42,10 +42,10 @@ def configure_sidebar(models_config, output_directory):
     )
     st.sidebar.markdown(f"Selected **LLM Model**: **`{selected_llm_model}`**")
     st.sidebar.markdown(
-        f"Input price per **1K tokens**: **`{llm_input_prices[selected_llm_model]*1000:.4f} $`**"
+        f"Input price per **:red[1K tokens]** **`{llm_input_prices[selected_llm_model]*1000:.4f} $`**"
     )
     st.sidebar.markdown(
-        f"Output price per **1K tokens**: **`{llm_output_prices[selected_llm_model]*1000:.4f} $`**"
+        f"Output price per **:red[1K tokens]** **`{llm_output_prices[selected_llm_model]*1000:.4f} $`**"
     )
     # Sidebar configuration - Temperature Setting
     st.sidebar.title("🔥 Model Temperature")

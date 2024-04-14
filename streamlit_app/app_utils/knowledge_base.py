@@ -1,9 +1,14 @@
 import streamlit as st
+import time
+
 from .others import read_file_content
 
 
 def setup_knowledge_base_tab(
-    query_pipeline, selected_embedding_model, output_directory
+    query_pipeline,
+    selected_embedding_model,
+    output_directory,
+    selected_embedding_model_cost,
 ):
     st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
@@ -27,6 +32,7 @@ def setup_knowledge_base_tab(
         if st.button("Add documents to **:green[Knowledge Base]**", key="create_db"):
             with st.spinner("Creating database from files..."):
 
+                start_time = time.time()
                 total_cost = query_pipeline.setup_semantic_database(
                     markdown_path="",
                     embedding_model=selected_embedding_model,
@@ -34,11 +40,32 @@ def setup_knowledge_base_tab(
                     directory_path=output_directory,
                     markdown_content=markdown_content,
                 )
+
+                end_time = time.time()
+                elapsed_time = end_time - start_time
+
+                # Formatting Cost and Price
+                elapsed_time_formatted = f"{elapsed_time:.2f} Secs"
                 formatted_cost = f"$ {total_cost:.8f}"
+
                 st.success(
                     f"File(s) are added successfully to the knowledge base! Total cost: **:red[{formatted_cost}]**",
                     icon="✅",
                 )
+
+                # Summary metrics
+                detailed_summary_table = f"""
+                | Metric | Details | Value |
+                | :--- | :--- | :---: |
+                | ⏱ **Time Taken** | Total time to process and add files to the knowledge base. | **:green[{elapsed_time_formatted}]** |
+                | 💰 **Total Estimated Cost** | Cost estimated based on the processing required for the uploaded documents. | **:green[{formatted_cost}]** |
+                | 🤖 **Embedding Model Used** | AI model used to create embeddings for the knowledge base. | **:green[{selected_embedding_model}]** |
+                | 💵 **Model Cost Per Token** | The cost per Token of processing with the selected model. | ${selected_embedding_model_cost:.8f} |
+                | 📄 **Total Documents Processed** | Number of markdown documents added to the knowledge base. | {len(uploaded_files)} |
+                """
+
+                with st.expander("Detailed Summary", expanded=True):
+                    st.markdown(detailed_summary_table)
 
     else:
         st.info("Upload markdown files to proceed with database setup.")
