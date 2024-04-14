@@ -6,7 +6,7 @@ import json
 
 from ..models.inference import ModelInferenceManager
 from ..models.vectorization import SemanticVectorizer
-
+from ..utils.utils import split_markdown_by_headers
 
 class QueryPipeline:
     def __init__(self, openai_api_key, models_config):
@@ -32,11 +32,9 @@ class QueryPipeline:
 
         # Check if content is directly provided, otherwise read from the path
         if markdown_content:
-            # Directly use provided markdown content
-            self.embedder.texts = [
-                self.embedder.preprocess_text(text)
-                for text in markdown_content.split("\n\n")
-            ]
+                # Directly use provided markdown content
+                self.embedder.texts = split_markdown_by_headers(markdown_content)
+                print(self.embedder.texts)
         elif markdown_path:
             # Read and process markdown file if path is provided
             self.embedder.read_and_process_markdown(markdown_path)
@@ -61,7 +59,10 @@ class QueryPipeline:
         if save_index and directory_path:
             self.embedder.save_faiss_index(index_path, texts_path)
 
-        return total_cost
+        # Calculate the total documents processed
+        total_documents_processed = len(self.embedder.texts)
+
+        return total_cost, total_documents_processed
 
     def find_similar_documents(self, query_text, num_results):
         similar_docs = self.embedder.search_similar_sections(query_text, num_results)

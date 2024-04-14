@@ -1,4 +1,5 @@
 import yaml
+import re
 import os
 
 
@@ -31,3 +32,19 @@ def load_models_config(config_file_path):
         except yaml.YAMLError as exc:
             print(f"Error loading models configuration: {exc}")
             return None
+
+
+def split_markdown_by_headers(markdown_content):
+    pattern = re.compile(r'(?m)(^#{1,6}\s.*$)')
+    parts = pattern.split(markdown_content)
+    sections = []
+    current_header = None
+    for part in parts:
+        if pattern.match(part):
+            current_header = part.strip()
+        elif part.strip():
+            if current_header:
+                sections.append(f"{current_header}\n{part.strip()}")
+            else:
+                sections.append(part.strip())
+    return sections
