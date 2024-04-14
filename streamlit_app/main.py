@@ -70,11 +70,12 @@ def main():
     # Tab for performing queries using the RAG model
     with rag_query_tab:
         initialize_rag_query_tab(
+            selected_embedding_model_name,
+            query_pipeline,
             selected_llm_name,
             selected_llm_temp,
             selected_llm_tokens_limit,
-            openai_api_key,
-            models_config,
+            processed_documents,
         )
 
 
