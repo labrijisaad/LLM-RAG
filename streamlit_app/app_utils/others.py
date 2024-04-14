@@ -10,7 +10,9 @@ def image_to_base64(image):
 
 
 def read_file_content(uploaded_file):
-    """Function to read and decode the uploaded file."""
+    """
+    Function to read and decode the uploaded file.
+    """
     return uploaded_file.getvalue().decode("utf-8")
 
 
@@ -32,7 +34,7 @@ def get_embedding_models(models_config):
 
 def get_llm_models(models_config):
     """
-    Extract LLM model names and their input/output pricing from the loaded models configuration.
+    Extract LLM model names and their input/output pricing from models configuration file.
     """
     llm_models = [
         (
@@ -41,7 +43,7 @@ def get_llm_models(models_config):
             model["output_price_per_token"],
         )
         for group in models_config["models"]
-        if "GPT" in group["name"]  # Assumes that LLMs have 'GPT' in their group name
+        if "GPT" in group["name"]
         for model in group["variants"]
     ]
     return llm_models
