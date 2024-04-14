@@ -8,6 +8,7 @@ from ..models.inference import ModelInferenceManager
 from ..models.vectorization import SemanticVectorizer
 from ..utils.utils import split_markdown_by_headers
 
+
 class QueryPipeline:
     def __init__(self, openai_api_key, models_config):
         self.embedder = SemanticVectorizer(openai_api_key, models_config)
@@ -32,9 +33,9 @@ class QueryPipeline:
 
         # Check if content is directly provided, otherwise read from the path
         if markdown_content:
-                # Directly use provided markdown content
-                self.embedder.texts = split_markdown_by_headers(markdown_content)
-                print(self.embedder.texts)
+            # Directly use provided markdown content
+            self.embedder.texts = split_markdown_by_headers(markdown_content)
+            print(self.embedder.texts)
         elif markdown_path:
             # Read and process markdown file if path is provided
             self.embedder.read_and_process_markdown(markdown_path)

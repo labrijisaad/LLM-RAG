@@ -35,7 +35,7 @@ def load_models_config(config_file_path):
 
 
 def split_markdown_by_headers(markdown_content):
-    pattern = re.compile(r'(?m)(^#{1,6}\s.*$)')
+    pattern = re.compile(r"(?m)(^#{1,6}\s.*$)")
     parts = pattern.split(markdown_content)
     sections = []
     current_header = None

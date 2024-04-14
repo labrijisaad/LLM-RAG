@@ -35,12 +35,14 @@ def setup_knowledge_base_tab(
                 print(markdown_content)
 
                 start_time = time.time()
-                total_cost, total_documents_processed = query_pipeline.setup_semantic_database(
-                    markdown_path="",
-                    embedding_model=selected_embedding_model,
-                    save_index=True,
-                    directory_path=output_directory,
-                    markdown_content=markdown_content,
+                total_cost, total_documents_processed = (
+                    query_pipeline.setup_semantic_database(
+                        markdown_path="",
+                        embedding_model=selected_embedding_model,
+                        save_index=True,
+                        directory_path=output_directory,
+                        markdown_content=markdown_content,
+                    )
                 )
 
                 end_time = time.time()
