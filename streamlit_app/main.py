@@ -1,6 +1,5 @@
 import os
 import sys
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import streamlit as st
@@ -31,7 +30,6 @@ def main():
 
     # Sidebar configuration - Embedding Models Settings
     st.sidebar.title("🔢 OpenAI *Embedding Model* Settings")
-
     embedding_model_info = get_embedding_models(models_config)
     model_names = [model[0] for model in embedding_model_info]
     model_prices = {model[0]: model[1] for model in embedding_model_info}
@@ -64,6 +62,7 @@ def main():
     st.sidebar.markdown(
         f"Output price per **1K tokens**: **`{llm_output_prices[selected_llm_model]*1000:.4f} $`**"
     )
+    # Sidebar configuration - Temperature Setting
     st.sidebar.title("🔥 Model Temperature")
     temperature = st.sidebar.slider(
         "Select the LLM temperature",
@@ -74,6 +73,7 @@ def main():
         help="La température contrôle la créativité du modèle. Une valeur plus élevée génère des réponses plus variées et imprévisibles, tandis qu'une valeur plus basse produit des réponses plus déterministes.",
     )
     st.sidebar.markdown(f"Selected Temperature: **`{temperature}`**")
+    # Sidebar configuration - Max Completion Tokens Setting
     st.sidebar.title("⚡ Max Completion Tokens")
     max_tokens = st.sidebar.slider(
         "Select the LLM Max Completion Tokens",
@@ -84,7 +84,7 @@ def main():
     )
     st.sidebar.markdown(f"Selected Max Completion Tokens: **`{max_tokens}`**")
 
-    # Quick Links
+    # Sidebar configuration - Quick Links
     st.sidebar.title("🌐 Connect with Me")
     st.sidebar.markdown(
         """
@@ -98,8 +98,8 @@ def main():
         unsafe_allow_html=True,
     )
 
-    tab1, tab3, tab2 = st.tabs(
-        ["Knowledge Base Setup", "View Knowledge Base", "RAG Query"]
+    tab1, tab2, tab3 = st.tabs(
+        ["Knowledge Base Setup", "RAG Query", "View Knowledge Base"]
     )
 
     with tab1:

@@ -56,7 +56,7 @@ app2:
 
 stream:
 	@$(VENV_ACTIVATE)
-	@streamlit run .\streamlit_app.py
+	@streamlit run .\streamlit_app\main.py
 
 test:
 	@$(VENV_ACTIVATE)
