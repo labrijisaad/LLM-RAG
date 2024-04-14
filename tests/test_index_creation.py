@@ -11,7 +11,7 @@ def test_index_creation(tmpdir):
 
     query_pipeline = QueryPipeline(openai_api_key, models_config)
 
-    total_cost = query_pipeline.setup_semantic_database(
+    total_cost, total_documents_processed = query_pipeline.setup_semantic_database(
         markdown_path="data/raw/mock_markdown.md",
         embedding_model="text-embedding-3-small",
         save_index=True,
