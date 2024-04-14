@@ -2,6 +2,14 @@ import base64
 from io import BytesIO
 import os
 import glob
+import time
+
+
+def stream_response(response):
+    """Stream the response word by word to simulate typing."""
+    for word in response.split():
+        yield word + " "
+        time.sleep(0.02)
 
 
 def image_to_base64(image):
