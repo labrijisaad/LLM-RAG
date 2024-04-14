@@ -6,7 +6,7 @@ from .others import read_file_content
 def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_model):
     st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
-        "Upload :red[Markdown] Files:", 
+        "Upload :red[Markdown] Files:",
         type=["md"],
         accept_multiple_files=True,
         help="Upload markdown files for processing.",
@@ -57,7 +57,7 @@ def display_knowledge_base_tab(all_texts):
             "Enter a search keyword  ( :red[Note: A maximum of **10** documents will be displayed] )",
             "",
             placeholder="Type here...",
-            help="Search the knowledge base by keyword. The search results are limited to the top 10 documents."
+            help="Search the knowledge base by keyword. The search results are limited to the top 10 documents.",
         )
         if search_query:
             # Filter texts and sort by the number of occurrences of the search query
