@@ -1,10 +1,10 @@
 import streamlit as st
 
+
 def about_tab():
 
-
-
-    st.markdown("""
+    st.markdown(
+        """
     ### 😄 About Me
 
     <img src="https://readme-typing-svg.herokuapp.com?lines=🤖+Machine+Learning+Engineering+🤖;⚙️Data+Engineering+⚙️;💎+5x+Azure+certified+💎&center=true&width=900&height=50">
@@ -36,4 +36,6 @@ def about_tab():
     [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/labrijisaad)
     
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
