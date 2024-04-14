@@ -92,7 +92,7 @@ class QueryPipeline:
         context_enhanced_prompt = self.model_inference_manager.prepare_prompt_for_llm(
             identified_expertise_area, user_query, similar_docs
         )
-        return context_enhanced_prompt, expertise_area_cost
+        return context_enhanced_prompt, expertise_area_cost, identified_expertise_area
 
     def query_model_for_response(
         self, context_enhanced_prompt, max_completion_tokens, temperature
