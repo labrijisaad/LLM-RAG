@@ -10,6 +10,7 @@ from streamlit_app.app_utils.knowledge_base import (
 )
 from streamlit_app.app_utils.sidebar import configure_sidebar
 from streamlit_app.app_utils.rag import initialize_rag_query_tab
+from streamlit_app.app_utils.about import about_tab
 
 from src.pipelines.query_pipeline import QueryPipeline
 from src.utils.utils import load_models_config, load_credentials
@@ -45,8 +46,8 @@ def main():
     query_pipeline.set_model(selected_llm_name)
 
     # Create tabs for the application interface
-    setup_kb_tab, view_kb_tab, rag_query_tab = st.tabs(
-        ["Setup Knowledge Base", "Explore Knowledge Base", "RAG Query"]
+    setup_kb_tab, view_kb_tab, rag_query_tab, setup_about_tab = st.tabs(
+        ["Setup Knowledge Base", "Explore Knowledge Base", "RAG Query", "About me"]
     )
 
     # Tab for setting up the Knowledge Base
@@ -77,6 +78,8 @@ def main():
             selected_llm_tokens_limit,
             processed_documents,
         )
+    with setup_about_tab:
+        about_tab()
 
 
 if __name__ == "__main__":
