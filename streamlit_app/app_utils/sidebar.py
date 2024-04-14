@@ -5,7 +5,7 @@ from app_utils.others import get_embedding_models, get_llm_models, image_to_base
 
 
 def configure_sidebar(models_config):
-    logo = Image.open("./streamlit_app/app_logo.png")
+    logo = Image.open("./streamlit_app/app_utils/app_logo.png")
     st.sidebar.markdown(
         f'<div style="text-align: center;"><a href="https://github.com/labrijisaad"><img src="data:image/png;base64,{image_to_base64(logo)}" alt="Direct Assurance Logo" width="100"></a></div>',
         unsafe_allow_html=True,
@@ -21,7 +21,7 @@ def configure_sidebar(models_config):
         help="Choose from available OpenAI embedding models. Model choice affects result quality, inference time, and cost per query.",
     )
     selected_embedding_model_price = model_prices[selected_embedding_model]
-    st.sidebar.markdown(f"Selected Model: **`{selected_embedding_model}`**")
+    st.sidebar.markdown(f"Selected **Embedding Model**: **`{selected_embedding_model}`**")
     st.sidebar.markdown(
         f"Price per **1M token**: **`{selected_embedding_model_price*1000000:.2f} $`**"
     )
@@ -37,7 +37,7 @@ def configure_sidebar(models_config):
         llm_model_names,
         help="Choose from available OpenAI LLMs. Model choice affects result quality, inference time, and cost per query.",
     )
-    st.sidebar.markdown(f"Selected Model: **`{selected_llm_model}`**")
+    st.sidebar.markdown(f"Selected **LLM Model**: **`{selected_llm_model}`**")
     st.sidebar.markdown(
         f"Input price per **1K tokens**: **`{llm_input_prices[selected_llm_model]*1000:.4f} $`**"
     )

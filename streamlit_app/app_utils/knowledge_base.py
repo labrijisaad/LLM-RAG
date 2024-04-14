@@ -18,7 +18,7 @@ def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_m
 
         markdown_content = ""
         for uploaded_file in uploaded_files:
-            with st.expander(f"👀 View Content of **`{uploaded_file.name}`** file"):
+            with st.expander(f":red[View Content of **`{uploaded_file.name}`**]"):
                 file_content = read_file_content(uploaded_file)
                 markdown_content += file_content + "\n"
                 st.text(file_content)
@@ -50,7 +50,7 @@ def display_knowledge_base_tab(all_texts):
         )
     else:
         # Display basic info about the Knowledge Base
-        st.markdown(f"📜 :red[Total Documents] in Knowledge Base `{len(all_texts)}`")
+        st.markdown(f"Total Documents in Knowledge Base `{len(all_texts)}`")
 
         # Search box for filtering texts
         search_query = st.text_input(
@@ -80,10 +80,10 @@ def display_knowledge_base_tab(all_texts):
                     with col1:
                         st.metric(label="Occurrences", value=count)
                     with col2:
-                        with st.expander(f"Text {index} Preview", expanded=True):
+                        with st.expander(f":green[Document **{index}**]", expanded=True):
                             st.text(text[:75] + "...")  # Show preview of the text
                             if st.button("Show More", key=f"more_{index}"):
-                                st.text_area("Full Text", text, height=130)
+                                st.text_area(":green[Full Text]", text, height=130)
         else:
             filtered_texts = []
             st.info("Enter a keyword to search the knowledge base.")
