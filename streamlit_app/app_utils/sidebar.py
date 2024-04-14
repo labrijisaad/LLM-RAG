@@ -73,11 +73,11 @@ def configure_sidebar(models_config, output_directory):
     # Sidebar configuration - Knowledge base Documents
     st.sidebar.title("❌ Drop **:red[All Documents]** in Knowledge Base")
     delete_confirmation = st.sidebar.text_input(
-        "Type **:red[DELETE]** to confirm", 
-        help="Enter **:red[DELETE]** to confirm the **:red[removal of all documents]** in the Knowledge Base."
+        "Type **:red[DELETE]** to confirm",
+        help="Enter **:red[DELETE]** to confirm the **:red[removal of all documents]** in the Knowledge Base.",
     )
 
-    if delete_confirmation == 'DELETE':
+    if delete_confirmation == "DELETE":
         delete_files(output_directory)
         st.sidebar.success("All documents have been deleted.")
     else:

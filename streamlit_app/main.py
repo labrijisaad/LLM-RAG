@@ -58,18 +58,20 @@ def main():
     # Tab for displaying and exploring the Knowledge Base
     with view_kb_tab:
         # Filter out empty documents
-        processed_documents = [doc for doc in query_pipeline.embedder.texts if doc.strip()]
+        processed_documents = [
+            doc for doc in query_pipeline.embedder.texts if doc.strip()
+        ]
         # Display the documents in the Knowledge Base tab
         display_knowledge_base_tab(processed_documents)
 
     # Tab for performing queries using the RAG model
     with rag_query_tab:
         initialize_rag_query_tab(
-            selected_llm_name, 
-            selected_llm_temp, 
+            selected_llm_name,
+            selected_llm_temp,
             selected_llm_tokens_limit,
             openai_api_key,
-            models_config
+            models_config,
         )
 
 

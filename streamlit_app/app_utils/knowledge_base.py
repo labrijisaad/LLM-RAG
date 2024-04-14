@@ -1,9 +1,10 @@
 import streamlit as st
-from src.pipelines.query_pipeline import QueryPipeline
 from .others import read_file_content
 
 
-def setup_knowledge_base_tab(query_pipeline, selected_embedding_model, output_directory):
+def setup_knowledge_base_tab(
+    query_pipeline, selected_embedding_model, output_directory
+):
     st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
         "Upload :red[Markdown] Files:",
@@ -23,7 +24,6 @@ def setup_knowledge_base_tab(query_pipeline, selected_embedding_model, output_di
                 markdown_content += file_content + "\n"
                 st.text(file_content)
 
-
         if st.button("Add documents to **:green[Knowledge Base]**", key="create_db"):
             with st.spinner("Creating database from files..."):
 
@@ -35,7 +35,10 @@ def setup_knowledge_base_tab(query_pipeline, selected_embedding_model, output_di
                     markdown_content=markdown_content,
                 )
                 formatted_cost = f"$ {total_cost:.8f}"
-                st.success(f"File(s) are added successfully to the knowledge base! Total cost: **:red[{formatted_cost}]**", icon="✅")
+                st.success(
+                    f"File(s) are added successfully to the knowledge base! Total cost: **:red[{formatted_cost}]**",
+                    icon="✅",
+                )
 
     else:
         st.info("Upload markdown files to proceed with database setup.")

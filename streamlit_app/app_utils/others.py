@@ -3,6 +3,7 @@ from io import BytesIO
 import os
 import glob
 
+
 def image_to_base64(image):
     img_buffer = BytesIO()
     image.save(img_buffer, format="PNG")
@@ -50,11 +51,12 @@ def get_llm_models(models_config):
     return llm_models
 
 
-
 def delete_files(directory):
     # Gather all .json and .bin files
-    files_to_delete = glob.glob(os.path.join(directory, '*.json')) + glob.glob(os.path.join(directory, '*.bin'))
-    
+    files_to_delete = glob.glob(os.path.join(directory, "*.json")) + glob.glob(
+        os.path.join(directory, "*.bin")
+    )
+
     # Delete the files
     for file_path in files_to_delete:
         os.remove(file_path)
