@@ -2,9 +2,10 @@ import streamlit as st
 
 from PIL import Image
 from app_utils.others import get_embedding_models, get_llm_models, image_to_base64
+from .others import delete_files
 
 
-def configure_sidebar(models_config):
+def configure_sidebar(models_config, output_directory):
     logo = Image.open("./streamlit_app/app_utils/app_logo.png")
     st.sidebar.markdown(
         f'<div style="text-align: center;"><a href="https://github.com/labrijisaad"><img src="data:image/png;base64,{image_to_base64(logo)}" alt="Direct Assurance Logo" width="100"></a></div>',
@@ -54,7 +55,7 @@ def configure_sidebar(models_config):
         max_value=1.0,
         value=0.7,
         step=0.01,
-        help="Control the model's creativity. Higher values yield more varied, unpredictable responses, while lower values are more deterministic.",
+        help="Control the **:green[model's creativity]**. **Higher values** yield more varied, unpredictable responses, while **lower values** are more deterministic.",
     )
     st.sidebar.markdown(f"Selected Temperature: **`{selected_llm_temperature}`**")
     # Sidebar configuration - Max Completion Tokens Setting
@@ -64,11 +65,24 @@ def configure_sidebar(models_config):
         min_value=50,
         value=500,
         max_value=3500,
-        help="Set the max number of tokens for LLM to generate. Affects response length and processing time.",
+        help="Set the **:green[max number of tokens]** for LLM to generate. Affects response length and processing time.",
     )
     st.sidebar.markdown(
         f"Selected Max Completion Tokens: **`{selected_llm_max_tokens_completion}`**"
     )
+    # Sidebar configuration - Knowledge base Documents
+    st.sidebar.title("❌ Drop **:red[All Documents]** in Knowledge Base")
+    delete_confirmation = st.sidebar.text_input(
+        "Type **:red[DELETE]** to confirm", 
+        help="Enter **:red[DELETE]** to confirm the **:red[removal of all documents]** in the Knowledge Base."
+    )
+
+    if delete_confirmation == 'DELETE':
+        delete_files(output_directory)
+        st.sidebar.success("All documents have been deleted.")
+    else:
+        if delete_confirmation:
+            st.sidebar.error("Type 'DELETE' exactly to enable the confirm button.")
 
     # Sidebar configuration - Quick Links
     st.sidebar.title("🌐 Connect with Me")

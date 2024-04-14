@@ -3,7 +3,7 @@ from src.pipelines.query_pipeline import QueryPipeline
 from .others import read_file_content
 
 
-def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_model):
+def setup_knowledge_base_tab(query_pipeline, selected_embedding_model, output_directory):
     st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
         "Upload :red[Markdown] Files:",
@@ -14,7 +14,7 @@ def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_m
 
     if uploaded_files:
         uploaded_file_names = ", ".join(["'" + f.name + "'" for f in uploaded_files])
-        st.success(f"**Uploaded Files:** **`{uploaded_file_names}`**")
+        st.info(f"**Uploaded Files:** **`{uploaded_file_names}`**", icon="🤖")
 
         markdown_content = ""
         for uploaded_file in uploaded_files:
@@ -23,10 +23,8 @@ def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_m
                 markdown_content += file_content + "\n"
                 st.text(file_content)
 
-        query_pipeline = QueryPipeline(openai_api_key, models_config)
-        # Directory to save index and texts
-        output_directory = "data/processed"
-        if st.button("Create Database", key="create_db"):
+
+        if st.button("Add documents to **:green[Knowledge Base]**", key="create_db"):
             with st.spinner("Creating database from files..."):
 
                 total_cost = query_pipeline.setup_semantic_database(
@@ -36,7 +34,8 @@ def setup_knowledge_base_tab(openai_api_key, models_config, selected_embedding_m
                     directory_path=output_directory,
                     markdown_content=markdown_content,
                 )
-                st.success(f"Database created successfully! Total cost: ${total_cost}")
+                formatted_cost = f"$ {total_cost:.8f}"
+                st.success(f"File(s) are added successfully to the knowledge base! Total cost: **:red[{formatted_cost}]**", icon="✅")
 
     else:
         st.info("Upload markdown files to proceed with database setup.")
@@ -57,7 +56,7 @@ def display_knowledge_base_tab(all_texts):
             "Enter a search keyword  ( :red[Note: A maximum of **10** documents will be displayed] )",
             "",
             placeholder="Type here...",
-            help="Search the knowledge base by keyword. The search results are limited to the top 10 documents.",
+            help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
         )
         if search_query:
             # Filter texts and sort by the number of occurrences of the search query
