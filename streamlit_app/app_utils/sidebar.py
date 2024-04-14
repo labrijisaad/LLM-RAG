@@ -21,7 +21,9 @@ def configure_sidebar(models_config):
         help="Choose from available OpenAI embedding models. Model choice affects result quality, inference time, and cost per query.",
     )
     selected_embedding_model_price = model_prices[selected_embedding_model]
-    st.sidebar.markdown(f"Selected **Embedding Model**: **`{selected_embedding_model}`**")
+    st.sidebar.markdown(
+        f"Selected **Embedding Model**: **`{selected_embedding_model}`**"
+    )
     st.sidebar.markdown(
         f"Price per **1M token**: **`{selected_embedding_model_price*1000000:.2f} $`**"
     )

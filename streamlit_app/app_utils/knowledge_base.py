@@ -80,7 +80,9 @@ def display_knowledge_base_tab(all_texts):
                     with col1:
                         st.metric(label="Occurrences", value=count)
                     with col2:
-                        with st.expander(f":green[Document **{index}**]", expanded=True):
+                        with st.expander(
+                            f":green[Document **{index}**]", expanded=True
+                        ):
                             st.text(text[:75] + "...")  # Show preview of the text
                             if st.button("Show More", key=f"more_{index}"):
                                 st.text_area(":green[Full Text]", text, height=130)
