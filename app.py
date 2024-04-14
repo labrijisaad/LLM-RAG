@@ -31,7 +31,7 @@ def main():
     )
 
     # Determine expertise area and prepare the prompt
-    context_enhanced_prompt, expertise_area_cost = (
+    context_enhanced_prompt, expertise_area_cost, identified_expertise_area = (
         query_pipeline.determine_expertise_and_prepare_prompt(
             user_query=user_query,
             similar_docs=similar_docs,
