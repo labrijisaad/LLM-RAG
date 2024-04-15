@@ -69,6 +69,7 @@ def delete_files(directory):
     for file_path in files_to_delete:
         os.remove(file_path)
 
+
 def search_documents(
     num_results,
     search_query,

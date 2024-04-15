@@ -90,20 +90,22 @@ def display_knowledge_base_tab(
         st.markdown(f"Total Documents in Knowledge Base `{len(all_texts)}`")
 
         search_query = st.text_input(
-        "Enter a search keyword  ",
-        "",
-        placeholder="Type here...",
-        help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
+            "Enter a search keyword  ",
+            "",
+            placeholder="Type here...",
+            help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
         )
-    
-        col1, col2, _ = st.columns([6.5, 2, 0.01], gap='large')
+
+        col1, col2, _ = st.columns([6.5, 2, 0.01], gap="large")
         with col1:
-            max_documents = st.slider(":red[Maximum Documents to Display]", 1, len(all_texts), 2)
+            max_documents = st.slider(
+                ":red[Maximum Documents to Display]", 1, len(all_texts), 2
+            )
         with col2:
             use_semantic_search = st.checkbox(":red[Use Similarity Search]")
 
-        search = st.button('**:red[Search]**')
-            
+        search = st.button("**:red[Search]**")
+
         if search:
             # Filter texts and sort by the number of occurrences of the search query
             with st.spinner("Searching Relevant Documents... 🤔"):
