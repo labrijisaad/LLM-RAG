@@ -89,18 +89,22 @@ def display_knowledge_base_tab(
         # Display basic info about the Knowledge Base
         st.markdown(f"Total Documents in Knowledge Base `{len(all_texts)}`")
 
-        # Search box for filtering texts
         search_query = st.text_input(
-            "Enter a search keyword  ( :red[Note: A maximum of **10** documents will be displayed] )",
-            "",
-            placeholder="Type here...",
-            help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
+        "Enter a search keyword  ",
+        "",
+        placeholder="Type here...",
+        help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
         )
+    
+        col1, col2, _ = st.columns([6.5, 2, 0.01], gap='large')
+        with col1:
+            max_documents = st.slider(":red[Maximum Documents to Display]", 1, len(all_texts), 2)
+        with col2:
+            use_semantic_search = st.checkbox(":red[Use Similarity Search]")
 
-        use_semantic_search = st.checkbox("Use Semantic Search")
-        max_documents = st.slider("Maximum Documents to Display", 1, len(all_texts), 2)
-
-        if search_query:
+        search = st.button('**:red[Search]**')
+            
+        if search:
             # Filter texts and sort by the number of occurrences of the search query
             with st.spinner("Searching Relevant Documents... 🤔"):
                 filtered_texts = search_documents(
@@ -111,10 +115,9 @@ def display_knowledge_base_tab(
                     query_pipeline,
                     selected_embedding_model,
                 )
-                print(filtered_texts)
             # Check if any texts match the query
             if not filtered_texts:
-                st.warning("No matches found. Please try a different keyword.")
+                st.warning("☹️ No matches found. Please try a different keyword.")
             else:
                 for index, (text, count) in enumerate(filtered_texts, start=1):
                     col1, col2 = st.columns([1, 4])
@@ -122,11 +125,9 @@ def display_knowledge_base_tab(
                         st.metric(label="Occurrences", value=count)
                     with col2:
                         with st.expander(
-                            f":green[Document **{index}**]", expanded=True
+                            f":green[Document **{index}**]", expanded=False
                         ):
-                            st.text(text[:75] + "...")  # Show preview of the text
-                            if st.button("Show More", key=f"more_{index}"):
-                                st.text_area(":green[Full Text]", text, height=130)
+                            st.info(text)
         else:
             filtered_texts = []
             st.info("Enter a keyword to search the knowledge base.")
