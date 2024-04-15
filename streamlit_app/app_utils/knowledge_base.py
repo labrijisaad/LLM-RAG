@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 
-from .others import read_file_content
+from .others import read_file_content, search_documents
 
 
 def setup_knowledge_base_tab(
@@ -75,7 +75,11 @@ def setup_knowledge_base_tab(
         st.info("Upload markdown files to proceed with database setup.")
 
 
-def display_knowledge_base_tab(all_texts):
+def display_knowledge_base_tab(
+    all_texts,
+    query_pipeline,
+    selected_embedding_model,
+):
     st.header("🔍Explore the :green[Knowledge Base] Content")
     if len(all_texts) == 0:
         st.warning(
@@ -85,28 +89,37 @@ def display_knowledge_base_tab(all_texts):
         # Display basic info about the Knowledge Base
         st.markdown(f"Total Documents in Knowledge Base `{len(all_texts)}`")
 
-        # Search box for filtering texts
         search_query = st.text_input(
-            "Enter a search keyword  ( :red[Note: A maximum of **10** documents will be displayed] )",
+            "Enter a search keyword  ",
             "",
             placeholder="Type here...",
             help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
         )
-        if search_query:
-            # Filter texts and sort by the number of occurrences of the search query
-            filtered_texts = sorted(
-                [
-                    (text, text.lower().count(search_query.lower()))
-                    for text in all_texts
-                    if search_query.lower() in text.lower()
-                ],
-                key=lambda x: x[1],
-                reverse=True,
-            )[:10]
 
+        col1, col2, _ = st.columns([6.5, 2, 0.01], gap="large")
+        with col1:
+            max_documents = st.slider(
+                ":red[Maximum Documents to Display]", 1, len(all_texts), 2
+            )
+        with col2:
+            use_semantic_search = st.checkbox(":red[Use Similarity Search]")
+
+        search = st.button("**:red[Search]**")
+
+        if search:
+            # Filter texts and sort by the number of occurrences of the search query
+            with st.spinner("Searching Relevant Documents... 🤔"):
+                filtered_texts = search_documents(
+                    max_documents,
+                    search_query,
+                    all_texts,
+                    use_semantic_search,
+                    query_pipeline,
+                    selected_embedding_model,
+                )
             # Check if any texts match the query
             if not filtered_texts:
-                st.warning("No matches found. Please try a different keyword.")
+                st.warning("☹️ No matches found. Please try a different keyword.")
             else:
                 for index, (text, count) in enumerate(filtered_texts, start=1):
                     col1, col2 = st.columns([1, 4])
@@ -114,11 +127,9 @@ def display_knowledge_base_tab(all_texts):
                         st.metric(label="Occurrences", value=count)
                     with col2:
                         with st.expander(
-                            f":green[Document **{index}**]", expanded=True
+                            f":green[Document **{index}**]", expanded=False
                         ):
-                            st.text(text[:75] + "...")  # Show preview of the text
-                            if st.button("Show More", key=f"more_{index}"):
-                                st.text_area(":green[Full Text]", text, height=130)
+                            st.info(text)
         else:
             filtered_texts = []
             st.info("Enter a keyword to search the knowledge base.")
