@@ -68,3 +68,35 @@ def delete_files(directory):
     # Delete the files
     for file_path in files_to_delete:
         os.remove(file_path)
+
+def search_documents(
+    num_results,
+    search_query,
+    all_texts,
+    is_semantic,
+    query_pipeline,
+    selected_embedding_model,
+):
+    if search_query:
+        if not is_semantic:
+            # Filter texts and sort by the number of occurrences of the search query
+            similar_docs = sorted(
+                [
+                    (text, text.lower().count(search_query.lower()))
+                    for text in all_texts
+                    if search_query.lower() in text.lower()
+                ],
+                key=lambda x: x[1],
+                reverse=True,
+            )[:num_results]
+        else:
+            # Use semantic search with the specified embedding model
+            query_pipeline.set_model(selected_embedding_model)
+            docs = query_pipeline.find_similar_documents(
+                query_text=search_query, num_results=num_results
+            )
+            # None here, because we don't have occurrence count in similarity search
+            similar_docs = [(doc, None) for doc in docs]
+        return similar_docs
+    else:
+        return []

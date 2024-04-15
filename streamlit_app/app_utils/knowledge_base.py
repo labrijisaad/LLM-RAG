@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 
-from .others import read_file_content
+from .others import read_file_content, search_documents
 
 
 def setup_knowledge_base_tab(
@@ -75,7 +75,11 @@ def setup_knowledge_base_tab(
         st.info("Upload markdown files to proceed with database setup.")
 
 
-def display_knowledge_base_tab(all_texts):
+def display_knowledge_base_tab(
+    all_texts,
+    query_pipeline,
+    selected_embedding_model,
+):
     st.header("🔍Explore the :green[Knowledge Base] Content")
     if len(all_texts) == 0:
         st.warning(
@@ -92,18 +96,22 @@ def display_knowledge_base_tab(all_texts):
             placeholder="Type here...",
             help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
         )
+
+        use_semantic_search = st.checkbox("Use Semantic Search")
+        max_documents = st.slider("Maximum Documents to Display", 1, len(all_texts), 2)
+
         if search_query:
             # Filter texts and sort by the number of occurrences of the search query
-            filtered_texts = sorted(
-                [
-                    (text, text.lower().count(search_query.lower()))
-                    for text in all_texts
-                    if search_query.lower() in text.lower()
-                ],
-                key=lambda x: x[1],
-                reverse=True,
-            )[:10]
-
+            with st.spinner("Searching Relevant Documents... 🤔"):
+                filtered_texts = search_documents(
+                    max_documents,
+                    search_query,
+                    all_texts,
+                    use_semantic_search,
+                    query_pipeline,
+                    selected_embedding_model,
+                )
+                print(filtered_texts)
             # Check if any texts match the query
             if not filtered_texts:
                 st.warning("No matches found. Please try a different keyword.")

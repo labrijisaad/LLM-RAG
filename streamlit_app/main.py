@@ -66,7 +66,9 @@ def main():
             doc for doc in query_pipeline.embedder.texts if doc.strip()
         ]
         # Display the documents in the Knowledge Base tab
-        display_knowledge_base_tab(processed_documents)
+        display_knowledge_base_tab(
+            processed_documents, query_pipeline, selected_embedding_model_name
+        )
 
     # Tab for performing queries using the RAG model
     with rag_query_tab:
