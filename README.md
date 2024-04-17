@@ -34,43 +34,26 @@ graph TD
 ```
 
 ## Project Structure 🏗️
-The project structure is organized as follows, ensuring modularity and ease of maintenance:
+The project's main directories are laid out as follows:
 
 ```
 LLM-RAG/
-│
-├── src/                        # Source code for the application
-│   │
-│   ├── models/                 
-│   │   ├── inference.py        # ModelInferenceManager class
-│   │   └── vectorization.py    # SemanticVectorizer class
-│   │
-│   ├── pipelines/              # Pipeline for processing queries
-│   │   └── query_pipeline.py   # QueryPipeline class
-│   │
-│   ├── utils/                  # Utility functions and classes
-│   │   └── utils.py            # Helper functions, e.g., for loading configs
-│   │
-│   └── __init__.py             # Makes src a Python module
-│
-├── configs/                    # Configuration files
-│   └── models_config.yml       # Model configurations
-│
-├── data/                       # Data used by the application
-│   ├── raw/                    # Raw data like markdown files
-│   ├── processed/              # Processed data like embeddings
-│   └── faiss_index/            # FAISS indices
-│
+├── .github/workflows/          # CI/CD pipeline definitions
+├── configs/                    # Configuration files for the model (model names, pricing..)
+├── data/                       # Data and indices used by the app (FAISS Knowledge Base)
+├── docker/                     # Docker related files 
 ├── notebooks/                  # Jupyter notebooks for experiments
-│   └── rag_llm_experiments.ipynb
-│
-├── secrets/                    # Secret keys and credentials
-│   └── credentials.yml         # OpenAI API credentials
-│
-├── app.py                      # Main Streamlit application script
+├── secrets/                    # API keys and other secrets (excluded from version control)
+├── src/                        # Source code for the LLM RAG logic
+├── streamlit_app/              # Streamlit app files for the Web Interface
+├── tests/                      # Test cases for the application
+├── .dockerignore               # Specifies ignored files in Docker builds
+├── .gitignore                  # Specifies untracked files ignored by git
+├── Dockerfile                  # Dockerfile for building the Docker image
+├── Makefile                    # Make commands for building and running the app 🧑‍💻
+├── README.md                   # Documentation and instructions
 ├── requirements.txt            # Python dependencies for the project
-├── README.md                   # Project documentation
-└── .gitignore                  # Specifies files to ignore in git
+└── (additional project files and scripts)
 ```
 
 ## 🚀 Getting Started
@@ -117,6 +100,26 @@ To begin using the LLM RAG app, follow these simple steps:
    # Or directly
    streamlit run streamlit_app/main.py
    ```
+## 🐳 Docker Version
+The application is available as a Docker container. To set up the Docker environment:
+
+1. **Build the Docker Image:**
+   Run `make docker-build` or use the Docker command directly:
+   ```shell
+   docker build -t llm_rag_app -f docker/Dockerfile .
+   ```
+
+2. **Run the Docker Container:**
+   Start the container with `make docker-run` or use the Docker command:
+   ```shell
+   docker run -p 8501:8501 -v $(pwd)/secrets:/app/secrets llm_rag_app
+   ```
+
+3. **Stop the Docker Container:**
+   Use `make docker-kill` to stop and remove the container.
+
+The Streamlit app will be available at **`http://localhost:8501`**.
+
 
 ## 🌐 Connect with me
 <div align="center">
