@@ -1,73 +1,49 @@
 # Variables
-VENV_NAME := venv
-DATA_RAW_DIR := data/raw
-DATA_PROCESSED_DIR := data/processed
-DATA_EXTERNAL_DIR := data/external
-NOTEBOOKS_DIR := notebooks
-DOCS_DIR := docs
-README_FILE := README.md
-CONFIG_FILE := config.yaml
-ENV_FILE := .env
-GITIGNORE_FILE := .gitignore
-REQUIREMENTS_FILE := requirements.txt
-GITKEEP_FILE := .gitkeep
-AUTHOR := labriji saad
+IMAGE_NAME := llm_rag_app
+CONTAINER_NAME := llm_rag_app_container
+SECRETS_VOLUME_PATH := $(CURDIR)/secrets
 
 # Default target
 .DEFAULT_GOAL := help
 
-# Detect OS and set commands accordingly
-OSFLAG :=
-ifeq ($(OS),Windows_NT)
-    OSFLAG += -D WIN32
-    ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
-        OSFLAG += -D AMD64
-    else
-        ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
-            OSFLAG += -D AMD64
-        endif
-        ifeq ($(PROCESSOR_ARCHITECTURE),x86)
-            OSFLAG += -D IA32
-        endif
-    endif
-    DELETE_CMD := del /F /Q
-    VENV_ACTIVATE := .\$(VENV_NAME)\Scripts\activate
-    MKDIR_CMD := mkdir
-    POWERSHELL_CMD := powershell
-else
-    DELETE_CMD := rm -rf
-    VENV_ACTIVATE := source $(VENV_NAME)/bin/activate
-    MKDIR_CMD := mkdir -p
-    POWERSHELL_CMD := pwsh
-endif
-
 # Activate the virtual environment and run Jupyter Lab
 jupy:
-	@$(VENV_ACTIVATE) && jupyter lab
-	@echo ">>>>>> Jupyter Lab is running <<<<<<"
+	@echo Starting Jupyter Lab...
+	@jupyter lab
 
-app:
-	@$(VENV_ACTIVATE)
-	@python app.py
-
-app2:
-	@$(VENV_ACTIVATE)
-	@python app2.py
-
+# Run the Streamlit app from the local system
 stream:
-	@$(VENV_ACTIVATE)
-	@streamlit run .\streamlit_app\main.py
+	@echo Launching Streamlit app...
+	@streamlit run streamlit_app/main.py
 
+# Run tests with pytest
 test:
-	@$(VENV_ACTIVATE)
+	@echo Running tests with pytest...
 	@pytest tests/
 
-# Display available make targets
+# Build the Docker image from the Dockerfile
+docker-build:
+	@echo Building Docker image named $(IMAGE_NAME)...
+	@docker build -t $(IMAGE_NAME) -f docker/Dockerfile .
+
+# Run the Docker container with the Streamlit app
+docker-run:
+	@echo Running Docker container named $(CONTAINER_NAME)...
+	@docker run -d --name $(CONTAINER_NAME) -p 8501:8501 -v "$(SECRETS_VOLUME_PATH):/app/secrets" $(IMAGE_NAME)
+
+# Stop and remove the Docker container
+docker-kill:
+	@echo Stopping and removing Docker container named $(CONTAINER_NAME)...
+	@docker stop $(CONTAINER_NAME)
+	@docker rm $(CONTAINER_NAME)
+
+# Display available make targets and their descriptions
 help:
 	@echo Available targets:
-	@echo   make jupy                                             - Activate the virtual environment and run Jupyter Lab
-	@echo   make test                                             - Tests the code using pytest
-	@echo   make app                                              - Runs the App
-	@echo   make app2                                             - Runs the App2
-	@echo   make stream                                           - Runs the streamlit app
+	@echo   make jupy            - Activate the virtual environment and run Jupyter Lab
+	@echo   make test            - Run the tests for the application with pytest
+	@echo   make stream          - Start the Streamlit app from the local system
+	@echo   make docker-build    - Build the Docker image for the application
+	@echo   make docker-run      - Run the Streamlit app in a Docker container
+	@echo   make docker-kill     - Stop and remove the Docker container
 	@echo Author: $(AUTHOR)

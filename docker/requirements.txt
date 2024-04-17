@@ -1,0 +1,8 @@
+# Final Docker requirements
+numpy
+openai
+tqdm
+faiss-cpu
+pandas
+pyyaml
+streamlit
