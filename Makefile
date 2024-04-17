@@ -9,17 +9,17 @@ SECRETS_VOLUME_PATH := $(CURDIR)/secrets
 # Activate the virtual environment and run Jupyter Lab
 jupy:
 	@echo Starting Jupyter Lab...
-	@$(VENV_ACTIVATE) && jupyter lab
+	@jupyter lab
 
 # Run the Streamlit app from the local system
 stream:
 	@echo Launching Streamlit app...
-	@$(VENV_ACTIVATE) && streamlit run streamlit_app/main.py
+	@streamlit run streamlit_app/main.py
 
 # Run tests with pytest
 test:
 	@echo Running tests with pytest...
-	@$(VENV_ACTIVATE) && pytest tests/
+	@pytest tests/
 
 # Build the Docker image from the Dockerfile
 docker-build:
