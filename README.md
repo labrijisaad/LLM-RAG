@@ -130,24 +130,35 @@ To begin using the LLM RAG app, follow these simple steps:
    streamlit run streamlit_app/main.py
    ```
 ## 🐳 Docker Version
-The application is available as a Docker container. To set up the Docker environment:
 
-1. **Build the Docker Image:**
-   Run `make docker-build` or use the Docker command directly:
+The application is available as a Docker container and can be easily set up and run with a few commands. If you want to run the application using the Docker image from the public registry, ensure that you have a `secrets` directory with the necessary API keys as specified in the `secrets/credentials.yml`.
+
+To pull and run the Docker container:
+
+1. **Pull the Docker Image:**
+   You can pull the image directly from **Google Artifact Registry** using the following command:
    ```shell
-   docker build -t llm_rag_app -f docker/Dockerfile .
+   docker pull europe-west1-docker.pkg.dev/llm-rag-application/llm-rag/llm_rag_app:latest
    ```
 
 2. **Run the Docker Container:**
-   Start the container with `make docker-run` or use the Docker command:
+   After pulling the image, you can run it with:
    ```shell
-   docker run -p 8501:8501 -v $(pwd)/secrets:/app/secrets llm_rag_app
+   docker run -p 8501:8501 -v $(pwd)/secrets:/app/secrets europe-west1-docker.pkg.dev/llm-rag-application/llm-rag/llm_rag_app:latest
    ```
+   This command will start the container and mount your **`secrets`** directory for the application to use.
 
-3. **Stop the Docker Container:**
-   Use `make docker-kill` to stop and remove the container.
+If you prefer to use the **Makefile**, the equivalent commands are provided for convenience:
 
-The Streamlit app will be available at **`http://localhost:8501`**.
+```shell
+# To pull the Docker image
+make docker-pull
+
+# To run the pulled Docker image
+make docker-run-pulled
+```
+
+The Streamlit app will be available at **`http://localhost:8501`** once the container is running.
 
 
 ## 🌐 Connect with me
