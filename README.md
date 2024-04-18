@@ -10,27 +10,27 @@ The LLM RAG Streamlit app is structured into several key areas, each serving a s
   <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/61518120-e3a0-4e76-84ea-4fb11bd82e4a" width="60%" />
 </p>
 
--  **Setup Knowledge Base** 📂: Users can establish their **knowledge base** by uploading **markdown documents**. This forms the foundational data that the app will reference for generating answers.
+-  **`Setup` Knowledge Base** 📂: Users can establish their **knowledge base** by uploading **markdown documents**. This forms the foundational data that the app will reference for generating answers.
 
--  **Explore Knowledge Base** 🔍: After setting up the knowledge base, users can browse and manage the uploaded documents. This allows users to ensure that the data is ready for queries.
+-  **`Explore` Knowledge Base** 🔍: After setting up the knowledge base, users can browse and manage the uploaded documents. This allows users to ensure that the data is ready for queries.
 
--  **RAG Query** 💡: In this tab, users can pose questions that the app will answer by referencing the content within the knowledge base. The RAG (Retrieval-Augmented Generation) model utilizes both the uploaded documents and the model's own knowledge to generate responses.
+-  **RAG `Query`** 💡: In this tab, users can pose questions that the app will answer by referencing the content within the knowledge base. The RAG (Retrieval-Augmented Generation) model utilizes both the uploaded documents and the model's own knowledge to generate responses.
 
 Additionally, the app offers advanced settings to tailor the querying experience:
 
 <p align="center">
-  <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/8f878a40-f268-4ba9-ae0f-75ca2391357d" width="30%" />
+  <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/8f878a40-f268-4ba9-ae0f-75ca2391357d" width="45%" />
 </p>
 
-- **OpenAI Embedding Model Settings**: Users select the desired embedding model for document vectorization. Choices affect the precision of semantic search and the cost per token processed.
+- **OpenAI `Embedding Model` Settings**: Users select the desired embedding model for document vectorization. Choices affect the precision of semantic search and the cost per token processed.
   
-- **OpenAI LLM Settings**: This setting allows users to choose the specific OpenAI language model variant for generating answers. It also displays the associated costs for input and output processing per 1,000 tokens.
+- **OpenAI `LLM` Settings**: This setting allows users to choose the specific OpenAI language model variant for generating answers. It also displays the associated costs for input and output processing per 1,000 tokens.
 
-- **Model Temperature**: Adjusting this parameter influences the creativity of the language model’s responses. A higher temperature may yield more varied and creative outputs, while a lower temperature results in more deterministic and conservative text.
+- **Model `Temperature`**: Adjusting this parameter influences the creativity of the language model’s responses. A higher temperature may yield more varied and creative outputs, while a lower temperature results in more deterministic and conservative text.
 
-- **Max Completion Tokens**: Users can define the maximum length of the generated response by setting the maximum number of tokens (words and characters) the model should produce.
+- **Max `Completion Tokens`**: Users can define the maximum length of the generated response by setting the maximum number of tokens (words and characters) the model should produce.
 
-- **Drop All Documents in Knowledge Base**: This functionality is crucial for managing the knowledge base. If users need to clear the database, they can do so by typing a confirmatory command.
+- **Drop All Documents in `Knowledge Base`**: This functionality is crucial for managing the knowledge base. If users need to clear the database, they can do so by typing a confirmatory command.
 
 ## 🛠️ System Architecture
 The following diagram illustrates the flow of data through the system:
