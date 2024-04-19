@@ -47,7 +47,7 @@ def main():
 
     # Create tabs for the application interface
     setup_kb_tab, view_kb_tab, rag_query_tab, setup_about_tab = st.tabs(
-        ["Setup Knowledge Base", "Explore Knowledge Base", "RAG Query", "About me"]
+        ["Setup Knowledge Base", "Explore Knowledge Base", "RAG Query", "About"]
     )
 
     # Tab for setting up the Knowledge Base
