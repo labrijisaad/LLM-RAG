@@ -33,7 +33,7 @@ def about_tab():
     - **Drop All Documents in `Knowledge Base`**: This functionality is crucial for managing the knowledge base. If users need to clear the database, they can do so by typing a confirmatory command.
     """,
         unsafe_allow_html=True,
-    ) 
+    )
 
     st.markdown(
         """
