@@ -87,7 +87,7 @@ def display_knowledge_base_tab(
         )
     else:
         # Display basic info about the Knowledge Base
-        st.markdown(f"Total Documents in Knowledge Base `{len(all_texts)}`")
+        st.markdown(f"> Total Documents in Knowledge Base `{len(all_texts)}`")
 
         search_query = st.text_input(
             "Enter a search keyword  ",
