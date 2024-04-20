@@ -40,10 +40,13 @@ def initialize_rag_query_tab(
                     similar_docs = []
 
                     if not similar_docs:
-                        st.error("❌ User has chosen not to provide documents from the knowledge base!")
+                        st.error(
+                            "❌ User has chosen not to provide documents from the knowledge base!"
+                        )
                     else:
                         with st.expander(
-                            "Used **:green[Relevent Documents]** in Context", expanded=False
+                            "Used **:green[Relevent Documents]** in Context",
+                            expanded=False,
                         ):
                             for doc in similar_docs:
                                 st.info(doc)
@@ -51,15 +54,19 @@ def initialize_rag_query_tab(
                 # Prepare context-enhanced prompt
                 with st.spinner("Preparing context-enhanced prompt..."):
                     if len(similar_docs) == 0:
-                        similar_docs = ['No documents found related to user query! Use your external knowledge or search the internet if possible']
-                    context_enhanced_prompt, expertise_area_cost, identified_expertise_area = (
-                        query_pipeline.determine_expertise_and_prepare_prompt(
-                            user_query=user_query,
-                            similar_docs=similar_docs, 
-                            inference_model=selected_llm_name,
-                            max_completion_tokens=selected_llm_tokens_limit,
-                            temperature=selected_llm_temp,
-                        )
+                        similar_docs = [
+                            "No documents found related to user query! Use your external knowledge or search the internet if possible"
+                        ]
+                    (
+                        context_enhanced_prompt,
+                        expertise_area_cost,
+                        identified_expertise_area,
+                    ) = query_pipeline.determine_expertise_and_prepare_prompt(
+                        user_query=user_query,
+                        similar_docs=similar_docs,
+                        inference_model=selected_llm_name,
+                        max_completion_tokens=selected_llm_tokens_limit,
+                        temperature=selected_llm_temp,
                     )
                     with st.expander("RAG Prompt", expanded=True):
                         st.info(
@@ -83,7 +90,9 @@ def initialize_rag_query_tab(
                     )
 
                 # Display message
-                st.chat_message("assistant").write_stream(stream_response(contextual_response))
+                st.chat_message("assistant").write_stream(
+                    stream_response(contextual_response)
+                )
 
                 # Display summary of costs and steps with enhanced visual and detailed tooltips
                 with st.expander("📊 Detailed Summary of Inference", expanded=True):
@@ -107,7 +116,9 @@ def initialize_rag_query_tab(
                     st.markdown(detailed_summary_table, unsafe_allow_html=True)
     else:
         # Display basic info about the Knowledge Base
-        st.markdown(f"> Total Documents in Knowledge Base `{total_docs_in_knowledge_base}`")
+        st.markdown(
+            f"> Total Documents in Knowledge Base `{total_docs_in_knowledge_base}`"
+        )
 
         # Ensure there are documents in the knowledge base
         if total_docs_in_knowledge_base == 0:
@@ -140,7 +151,7 @@ def initialize_rag_query_tab(
                 start_time = time.time()
                 with st.spinner("Finding similar documents..."):
                     query_pipeline.set_model(selected_embedding_model_name)
-                    if (num_results != 0):
+                    if num_results != 0:
                         similar_docs = query_pipeline.find_similar_documents(
                             query_text=user_query, num_results=num_results
                         )
@@ -148,10 +159,13 @@ def initialize_rag_query_tab(
                         similar_docs = []
 
                     if not similar_docs:
-                        st.error("❌ User has chosen not to provide documents from the knowledge base!")
+                        st.error(
+                            "❌ User has chosen not to provide documents from the knowledge base!"
+                        )
                     else:
                         with st.expander(
-                            "Used **:green[Relevent Documents]** in Context", expanded=False
+                            "Used **:green[Relevent Documents]** in Context",
+                            expanded=False,
                         ):
                             for doc in similar_docs:
                                 st.info(doc)
@@ -159,15 +173,19 @@ def initialize_rag_query_tab(
                 # Prepare context-enhanced prompt
                 with st.spinner("Preparing context-enhanced prompt..."):
                     if len(similar_docs) == 0:
-                        similar_docs = ['No documents found related to user query! Use your external knowledge or search the internet if possible']
-                    context_enhanced_prompt, expertise_area_cost, identified_expertise_area = (
-                        query_pipeline.determine_expertise_and_prepare_prompt(
-                            user_query=user_query,
-                            similar_docs=similar_docs, 
-                            inference_model=selected_llm_name,
-                            max_completion_tokens=selected_llm_tokens_limit,
-                            temperature=selected_llm_temp,
-                        )
+                        similar_docs = [
+                            "No documents found related to user query! Use your external knowledge or search the internet if possible"
+                        ]
+                    (
+                        context_enhanced_prompt,
+                        expertise_area_cost,
+                        identified_expertise_area,
+                    ) = query_pipeline.determine_expertise_and_prepare_prompt(
+                        user_query=user_query,
+                        similar_docs=similar_docs,
+                        inference_model=selected_llm_name,
+                        max_completion_tokens=selected_llm_tokens_limit,
+                        temperature=selected_llm_temp,
                     )
                     with st.expander("RAG Prompt", expanded=True):
                         st.info(
@@ -191,7 +209,9 @@ def initialize_rag_query_tab(
                     )
 
                 # Display message
-                st.chat_message("assistant").write_stream(stream_response(contextual_response))
+                st.chat_message("assistant").write_stream(
+                    stream_response(contextual_response)
+                )
 
                 # Display summary of costs and steps with enhanced visual and detailed tooltips
                 with st.expander("📊 Detailed Summary of Inference", expanded=True):
