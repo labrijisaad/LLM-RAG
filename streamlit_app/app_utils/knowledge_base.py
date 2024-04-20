@@ -83,7 +83,7 @@ def display_knowledge_base_tab(
     st.header("🔍Explore the :green[Knowledge Base] Content")
     if len(all_texts) == 0:
         st.warning(
-            "No databases were loaded. Please go to the 'Setup Database' tab to create your knowledge base."
+            "⚠️ Currently, no databases are loaded. Please navigate to the :red[Setup Knowledge Base] tab to create your knowledge base."
         )
     else:
         # Display basic info about the Knowledge Base
