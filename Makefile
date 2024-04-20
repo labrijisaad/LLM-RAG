@@ -65,14 +65,14 @@ docker-kill:
 # Display available make targets and their descriptions
 help:
 	@echo Available targets:
-	@echo   make jupy            - Activate the virtual environment and run Jupyter Lab
-	@echo   make test            - Run the tests for the application with pytest
-	@echo   make stream          - Start the Streamlit app from the local system
-	@echo   make docker-build    - Build the Docker image for the application
-	@echo   make docker-tag      - Tag the Docker image for Google Artifact Registry
-	@echo   make docker-push     - Push the Docker image to Google Artifact Registry
-	@echo   make docker-pull     - Pull the Docker image from Google Artifact Registry
-	@echo   make docker-run-pulled - Run the Streamlit app in a Docker container (pulled image)
-	@echo   make docker-run      - Run the Streamlit app in a Docker container
-	@echo   make docker-kill     - Stop and remove the Docker container
+	@echo   make jupy                - Activate the virtual environment and run Jupyter Lab
+	@echo   make test                - Run the tests for the application with pytest
+	@echo   make stream              - Start the Streamlit app from the local system
+	@echo   make docker-build        - Build the Docker image for the application
+	@echo   make docker-tag          - Tag the Docker image for Google Artifact Registry
+	@echo   make docker-push         - Push the Docker image to Google Artifact Registry
+	@echo   make docker-pull         - Pull the Docker image from Google Artifact Registry
+	@echo   make docker-run-pulled   - Run the Streamlit app in a Docker container (pulled image)
+	@echo   make docker-run          - Run the Streamlit app in a Docker container
+	@echo   make docker-kill         - Stop and remove the Docker container
 	@echo Author: $(AUTHOR)
