@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import string
 
 from .others import read_file_content, search_documents
 
@@ -89,11 +90,11 @@ def display_knowledge_base_tab(
         # Display basic info about the Knowledge Base
         st.markdown(f"> Total Documents in Knowledge Base `{len(all_texts)}`")
 
-        search_query = st.text_input(
+        search_query = st.text_input( # TODO
             "Enter a search keyword  ",
             "",
             placeholder="Type here...",
-            help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**.",
+            help="Search the knowledge base **:green[by keyword]**. The search results are **limited** to the **:red[top 10 documents]**. #TODO",
         )
 
         col1, col2, _ = st.columns([6.5, 2, 0.01], gap="large")
@@ -102,34 +103,41 @@ def display_knowledge_base_tab(
                 ":red[Maximum Documents to Display]", 1, len(all_texts), 2
             )
         with col2:
-            use_semantic_search = st.checkbox(":red[Use Similarity Search]")
+            use_semantic_search = st.checkbox(":red[Activate Similarity Search]")
 
         search = st.button("**:red[Search]**")
 
         if search:
-            # Filter texts and sort by the number of occurrences of the search query
-            with st.spinner("Searching Relevant Documents... 🤔"):
-                filtered_texts = search_documents(
-                    max_documents,
-                    search_query,
-                    all_texts,
-                    use_semantic_search,
-                    query_pipeline,
-                    selected_embedding_model,
-                )
-            # Check if any texts match the query
-            if not filtered_texts:
-                st.warning("☹️ No matches found. Please try a different keyword.")
-            else:
-                for index, (text, count) in enumerate(filtered_texts, start=1):
-                    col1, col2 = st.columns([1, 4])
-                    with col1:
-                        st.metric(label="Occurrences", value=count)
-                    with col2:
-                        with st.expander(
-                            f":green[Document **{index}**]", expanded=False
-                        ):
-                            st.info(text)
+            if not search_query.strip() or all(char in string.punctuation for char in search_query.strip()):
+                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+
+            else :
+                if use_semantic_search:
+                    st.info("📌 The :red[Similarity Search] feature may sometimes return **less relevant documents**, depending on the **Content** and the **Size** of the :green[knowledge base].")
+                # Filter texts and sort by the number of occurrences of the search query
+                with st.spinner("Searching Relevant Documents... 🤔"):
+                    filtered_texts = search_documents(
+                        max_documents,
+                        search_query,
+                        all_texts,
+                        use_semantic_search,
+                        query_pipeline,
+                        selected_embedding_model,
+                    )
+                # Check if any texts match the query
+                if not filtered_texts:
+                    st.warning("☹️ No matches found. Please try a different keyword. Or Activate the :red[Similarity Search]")
+                    st.info("❓ The :red[Similarity Search] feature allows you to **locate** the documents most closely related to your query within the :green[knowledge base]")
+                else:
+                    for index, (text, count) in enumerate(filtered_texts, start=1):
+                        col1, col2 = st.columns([1, 4])
+                        with col1:
+                            st.metric(label="Occurrences", value=count)
+                        with col2:
+                            with st.expander(
+                                f":green[Document **{index}**]", expanded=False
+                            ):
+                                st.info(text)
         else:
             filtered_texts = []
-            st.info("Enter a keyword to search the knowledge base.")
+            st.info("🤖 Enter a keyword to search the knowledge base, and click on the :red[Search] button!")

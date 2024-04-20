@@ -1,7 +1,7 @@
 import streamlit as st
 from .others import stream_response
 import time
-
+import string
 
 def initialize_rag_query_tab(
     selected_embedding_model_name,
@@ -21,6 +21,9 @@ def initialize_rag_query_tab(
         st.warning(
             "⚠️ No databases loaded. To create your knowledge base, visit the :red[Setup Knowledge Base] tab. the RAG LLM **:red[won't provide contextual answers]** without documents."
         )
+        st.info(
+            "🤌 You can still ask the :green[LLM RAG], but you won't get any context-based answers. ☹️"
+        )
 
         # User input for query
         user_query = st.text_input(
@@ -33,7 +36,9 @@ def initialize_rag_query_tab(
         message_button = st.button("**:red[Send Message]**")
         if message_button:
             # Execute only if user query is provided
-            if user_query:
+            if not user_query.strip() or all(char in string.punctuation for char in user_query.strip()):
+                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+            else:
                 start_time = time.time()
                 with st.spinner("Finding similar documents..."):
                     query_pipeline.set_model(selected_embedding_model_name)
@@ -68,7 +73,7 @@ def initialize_rag_query_tab(
                         max_completion_tokens=selected_llm_tokens_limit,
                         temperature=selected_llm_temp,
                     )
-                    with st.expander("RAG Prompt", expanded=True):
+                    with st.expander("Expertise Area Identification", expanded=False):
                         st.info(
                             f"Identified Expertise Area: **:red[{identified_expertise_area}]**"
                         )
@@ -109,8 +114,9 @@ def initialize_rag_query_tab(
                         | Metric | Details | Value |
                         | :--- | :--- | :---: |
                         | ⏱ **Time Taken** | Total time taken to process the query and generate the response. | **:red[{elapsed_time_formatted}]** |
-                        | 💵 **Total Estimated Cost** | Cost estimated based on the processing and querying with the RAG model. | **:red[{formatted_cost}]** |
-                        | 🤖 **LLM Model Used** | AI model used for generating the response. | **:green[{selected_llm_name}]** |
+                        | 💵 **Cost for Determining Expertise Area** | Cost from the initial prompt to determine the expertise area. | **:red[$ {expertise_area_cost:.6f}]** |
+                        | 🤑 **Cost to Query the LLM** | Cost estimated based on the processing and querying with the RAG model. | **:red[{formatted_cost}]** |
+                        | 🤖 **LLM Model Used** | AI model used for generating the response. | **:green[{selected_llm_name}]** | 
                         """
 
                     st.markdown(detailed_summary_table, unsafe_allow_html=True)
@@ -131,6 +137,7 @@ def initialize_rag_query_tab(
         num_results = st.number_input(
             "Select :green[number of documents] to include in the context",
             min_value=0,
+            value=2,
             max_value=total_docs_in_knowledge_base,
             step=1,
             help="Specify how many of the most relevant documents you want to include for generating the response. This helps in refining the context for more accurate answers.",
@@ -147,7 +154,9 @@ def initialize_rag_query_tab(
         message_button = st.button("**:red[Send Message]**")
         if message_button:
             # Execute only if user query is provided
-            if user_query:
+            if not user_query.strip() or all(char in string.punctuation for char in user_query.strip()):
+                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+            else:
                 start_time = time.time()
                 with st.spinner("Finding similar documents..."):
                     query_pipeline.set_model(selected_embedding_model_name)
@@ -187,7 +196,7 @@ def initialize_rag_query_tab(
                         max_completion_tokens=selected_llm_tokens_limit,
                         temperature=selected_llm_temp,
                     )
-                    with st.expander("RAG Prompt", expanded=True):
+                    with st.expander("Expertise Area Identification", expanded=False):
                         st.info(
                             f"Identified Expertise Area: **:red[{identified_expertise_area}]**"
                         )
@@ -228,8 +237,9 @@ def initialize_rag_query_tab(
                         | Metric | Details | Value |
                         | :--- | :--- | :---: |
                         | ⏱ **Time Taken** | Total time taken to process the query and generate the response. | **:red[{elapsed_time_formatted}]** |
-                        | 💵 **Total Estimated Cost** | Cost estimated based on the processing and querying with the RAG model. | **:red[{formatted_cost}]** |
-                        | 🤖 **LLM Model Used** | AI model used for generating the response. | **:green[{selected_llm_name}]** |
+                        | 💵 **Cost for Determining Expertise Area** | Cost from the initial prompt to determine the expertise area. | **:red[$ {expertise_area_cost:.6f}]** |
+                        | 🤑 **Cost to Query the LLM** | Cost estimated based on the processing and querying with the RAG model. | **:red[{formatted_cost}]** |
+                        | 🤖 **LLM Model Used** | AI model used for generating the response. | **:green[{selected_llm_name}]** | 
                         """
 
                     st.markdown(detailed_summary_table, unsafe_allow_html=True)
