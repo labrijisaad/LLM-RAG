@@ -13,10 +13,10 @@ def setup_knowledge_base_tab(
 ):
     st.header("📁 Setup :green[Knowledge Base]")
     uploaded_files = st.file_uploader(
-        "Upload :red[Markdown] Files:",
+        "Upload **:blue[Markdown Files]**",
         type=["md"],
         accept_multiple_files=True,
-        help="Upload markdown files for processing.",
+        help="Upload markdown files for processing.", #TODO
     )
 
     if uploaded_files:
@@ -73,7 +73,7 @@ def setup_knowledge_base_tab(
                     st.markdown(detailed_summary_table)
 
     else:
-        st.info("Upload markdown files to proceed with database setup.")
+        st.info("🤖 Upload **:blue[Markdown Files]** to proceed with **:green[Knowledge Base]** Setup.")
 
 
 def display_knowledge_base_tab(
