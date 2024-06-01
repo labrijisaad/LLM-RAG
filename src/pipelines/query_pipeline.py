@@ -46,7 +46,7 @@ class QueryPipeline:
         for i, text in enumerate(texts):
             # Set the current text to the embedder
             self.embedder.texts = [text]
-            
+
             # Reset embeddings for each chunk
             self.embedder.embeddings = []
 
@@ -72,8 +72,6 @@ class QueryPipeline:
             total_documents_processed += 1
 
         return total_cost, total_documents_processed
-
-
 
     def find_similar_documents(self, query_text, num_results):
         similar_docs = self.embedder.search_similar_sections(query_text, num_results)

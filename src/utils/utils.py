@@ -43,7 +43,7 @@ def split_markdown_by_headers_with_hierarchy(markdown_content):
     for part in parts:
         if pattern.match(part):
             # Extract header level and text
-            header_level = part.count('#')
+            header_level = part.count("#")
             header_text = part.strip()
 
             # Adjust the header stack based on the current header level
