@@ -82,7 +82,9 @@ def display_knowledge_base_tab(
     all_texts,
     query_pipeline,
     selected_embedding_model,
+    knowledge_base_dir
 ):
+
     st.header("🔍Explore the :green[Knowledge Base] Content")
     if len(all_texts) == 0:
         st.warning(

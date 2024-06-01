@@ -137,11 +137,9 @@ class QueryPipeline:
                 # Load FAISS index if both the index and texts files exist
                 if os.path.exists(index_path) and os.path.exists(texts_path):
                     faiss_index = faiss.read_index(index_path)
-                    print(f"Loaded FAISS index from {index_path}.")
 
                     with open(texts_path, "r", encoding="utf-8") as f:
                         texts = json.load(f)
-                        print(f"Loaded texts from {texts_path}.")
 
                     embeddings = np.zeros(
                         (faiss_index.ntotal, faiss_index.d), dtype="float32"
@@ -164,7 +162,6 @@ class QueryPipeline:
             self.embedder.faiss_index = faiss.IndexFlatL2(all_embeddings[0].shape[1])
             self.embedder.faiss_index.add(all_embeddings[0])
             self.embedder.texts = all_texts
-            print("Single database loaded successfully.")
         else:
             # Combine and rebuild the index for multiple databases
             combined_embeddings = np.vstack(all_embeddings)
@@ -172,4 +169,3 @@ class QueryPipeline:
             combined_index.add(combined_embeddings)
             self.embedder.faiss_index = combined_index
             self.embedder.texts = all_texts
-            print("Databases merged successfully.")

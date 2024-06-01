@@ -44,10 +44,10 @@ temp.txt
 # Secret files
 secrets/credentials.yml
 
-# generated json files
+# Ignore all json files in data/processed except specific ones
 data/processed/*.json
-!data/processed/faiss_db_mock_markdown.json
+!data/processed/mock_*.json
 
-# generated bin files
+# Ignore all bin files in data/processed except specific ones
 data/processed/*.bin
-!data/processed/faiss_db_mock_markdown.bin
+!data/processed/mock_*.bin
