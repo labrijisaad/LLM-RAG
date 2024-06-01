@@ -10,27 +10,21 @@ The LLM RAG Streamlit app is structured into several key areas, each serving a s
   <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/61518120-e3a0-4e76-84ea-4fb11bd82e4a" width="60%" />
 </p>
 
--  **`Setup` Knowledge Base** 📂: Users can establish their knowledge base by uploading markdown documents. These documents are split into chunks and stored in the knowledge base, forming the reference data used to generate answers.
-
--  **`Explore` Knowledge Base** 🔍: After setting up the knowledge base, users can browse and manage the uploaded documents. Users also have the option to delete documents.
-
--  **RAG `Query`** 💡: In this section, users can ask questions that the app will answer by referencing the content within the knowledge base. The RAG primarily uses the uploaded documents along with the LLM's inherent knowledge to generate responses.
+- **Setup Knowledge Base** 📂: Upload markdown documents to establish the knowledge base.
+- **Explore Knowledge Base** 🔍: Browse and manage the uploaded documents.
+- **RAG Query** 💡: Pose questions to receive answers referencing the knowledge base and the model's knowledge.
 
 Additionally, the app offers advanced settings for customization based on user needs:
 
 <p align="center">
-  <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/8f878a40-f268-4ba9-ae0f-75ca2391357d" width="45%" />
+  <img src="https://github.com/labrijisaad/LLM-RAG/assets/74627083/8f878a40-f268-4ba9-ae0f-75ca2391357d" width="30%" />
 </p>
 
-- **OpenAI `Embedding Model` Settings**: Users select the desired embedding model for document vectorization. Choices affect the precision of Similarity Search and the cost per token processed.
-  
-- **OpenAI `LLM` Settings**: This setting allows users to choose the specific OpenAI language model variant for generating answers. 
-
-- **Model `Temperature`**: Adjusting this parameter influences the creativity of the language model’s responses.
-
-- **Max `Completion Tokens`**: Users can define the maximum length of the generated response by setting the maximum number of tokens the model should produce.
-
-- **Drop All Documents in `Knowledge Base`**
+- **OpenAI Embedding Model Settings**: Select the embedding model for document vectorization.
+- **OpenAI LLM Settings**: Choose the OpenAI language model variant for generating answers.
+- **LLM Temperature**: Adjust the creativity of the model’s responses.
+- **Max Completion Tokens**: Define the maximum length of the generated response.
+- **Drop All Documents in Knowledge Base**: Clear the database by typing a confirmatory command.
 
 ## 🛠️ System Architecture
 The following diagram illustrates the flow of data through the system:
