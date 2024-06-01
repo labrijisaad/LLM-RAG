@@ -70,7 +70,10 @@ def main():
         ]
         # Display the documents in the Knowledge Base tab
         display_knowledge_base_tab(
-            processed_documents, query_pipeline, selected_embedding_model_name, knowledge_base_dir
+            processed_documents,
+            query_pipeline,
+            selected_embedding_model_name,
+            knowledge_base_dir,
         )
 
     # Tab for performing queries using the RAG model
