@@ -141,6 +141,7 @@ def initialize_rag_query_tab(
         # User input for number of results to include in the context
         num_results = st.number_input(
             "Select :green[number of documents] to include in the context",
+            max_value=total_docs_in_knowledge_base,
             min_value=0,
             value=2,
             step=1,

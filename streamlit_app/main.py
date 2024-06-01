@@ -58,9 +58,13 @@ def main():
             knowledge_base_dir,
             selected_embedding_model_cost,
         )
+        
 
     # Tab for displaying and exploring the Knowledge Base
     with view_kb_tab:
+        # Load and process the Knowledge Base documents
+        query_pipeline.load_and_merge_databases(knowledge_base_dir)
+        
         # Filter out empty documents
         processed_documents = [
             doc for doc in query_pipeline.embedder.texts if doc.strip()
@@ -72,6 +76,9 @@ def main():
 
     # Tab for performing queries using the RAG model
     with rag_query_tab:
+        # Load and process the Knowledge Base documents
+        query_pipeline.load_and_merge_databases(knowledge_base_dir)
+        
         initialize_rag_query_tab(
             selected_embedding_model_name,
             query_pipeline,
