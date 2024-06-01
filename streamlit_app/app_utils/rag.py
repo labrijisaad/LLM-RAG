@@ -3,6 +3,7 @@ from .others import stream_response
 import time
 import string
 
+
 def initialize_rag_query_tab(
     selected_embedding_model_name,
     query_pipeline,
@@ -36,8 +37,12 @@ def initialize_rag_query_tab(
         message_button = st.button("**:red[Send Message]**")
         if message_button:
             # Execute only if user query is provided
-            if not user_query.strip() or all(char in string.punctuation for char in user_query.strip()):
-                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+            if not user_query.strip() or all(
+                char in string.punctuation for char in user_query.strip()
+            ):
+                st.error(
+                    "❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**."
+                )
             else:
                 start_time = time.time()
                 with st.spinner("Finding similar documents..."):
@@ -154,8 +159,12 @@ def initialize_rag_query_tab(
         message_button = st.button("**:red[Send Message]**")
         if message_button:
             # Execute only if user query is provided
-            if not user_query.strip() or all(char in string.punctuation for char in user_query.strip()):
-                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+            if not user_query.strip() or all(
+                char in string.punctuation for char in user_query.strip()
+            ):
+                st.error(
+                    "❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**."
+                )
             else:
                 start_time = time.time()
                 with st.spinner("Finding similar documents..."):

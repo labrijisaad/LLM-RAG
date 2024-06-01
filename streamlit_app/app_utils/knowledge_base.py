@@ -90,7 +90,7 @@ def display_knowledge_base_tab(
         # Display basic info about the Knowledge Base
         st.markdown(f"> Total Documents in Knowledge Base `{len(all_texts)}`")
 
-        search_query = st.text_input( # TODO
+        search_query = st.text_input(  # TODO
             "Enter a search keyword  ",
             "",
             placeholder="Type here...",
@@ -108,12 +108,18 @@ def display_knowledge_base_tab(
         search = st.button("**:red[Search]**")
 
         if search:
-            if not search_query.strip() or all(char in string.punctuation for char in search_query.strip()):
-                st.error("❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**.")
+            if not search_query.strip() or all(
+                char in string.punctuation for char in search_query.strip()
+            ):
+                st.error(
+                    "❌ Please enter a valid word. The input should not be only **spaces**, **punctuation**, or **empty**."
+                )
 
-            else :
+            else:
                 if use_semantic_search:
-                    st.info("📌 The :red[Similarity Search] feature may sometimes return **less relevant documents**, depending on the **Content** and the **Size** of the :green[knowledge base].")
+                    st.info(
+                        "📌 The :red[Similarity Search] feature may sometimes return **less relevant documents**, depending on the **Content** and the **Size** of the :green[knowledge base]."
+                    )
                 # Filter texts and sort by the number of occurrences of the search query
                 with st.spinner("Searching Relevant Documents... 🤔"):
                     filtered_texts = search_documents(
@@ -126,8 +132,12 @@ def display_knowledge_base_tab(
                     )
                 # Check if any texts match the query
                 if not filtered_texts:
-                    st.warning("☹️ No matches found. Please try a different keyword. Or Activate the :red[Similarity Search]")
-                    st.info("❓ The :red[Similarity Search] feature allows you to **locate** the documents most closely related to your query within the :green[knowledge base]")
+                    st.warning(
+                        "☹️ No matches found. Please try a different keyword. Or Activate the :red[Similarity Search]"
+                    )
+                    st.info(
+                        "❓ The :red[Similarity Search] feature allows you to **locate** the documents most closely related to your query within the :green[knowledge base]"
+                    )
                 else:
                     for index, (text, count) in enumerate(filtered_texts, start=1):
                         col1, col2 = st.columns([1, 4])
@@ -140,4 +150,6 @@ def display_knowledge_base_tab(
                                 st.info(text)
         else:
             filtered_texts = []
-            st.info("🤖 Enter a keyword to search the knowledge base, and click on the :red[Search] button!")
+            st.info(
+                "🤖 Enter a keyword to search the knowledge base, and click on the :red[Search] button!"
+            )
