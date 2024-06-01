@@ -34,17 +34,27 @@ def load_models_config(config_file_path):
             return None
 
 
-def split_markdown_by_headers(markdown_content):
+def split_markdown_by_headers_with_hierarchy(markdown_content):
     pattern = re.compile(r"(?m)(^#{1,6}\s.*$)")
     parts = pattern.split(markdown_content)
     sections = []
-    current_header = None
+    header_stack = []
+
     for part in parts:
         if pattern.match(part):
-            current_header = part.strip()
+            # Extract header level and text
+            header_level = part.count('#')
+            header_text = part.strip()
+
+            # Adjust the header stack based on the current header level
+            while len(header_stack) >= header_level:
+                header_stack.pop()
+
+            header_stack.append(header_text)
         elif part.strip():
-            if current_header:
-                sections.append(f"{current_header}\n{part.strip()}")
-            else:
-                sections.append(part.strip())
+            # Ensure there is content and at least one header in the stack
+            if header_stack:
+                combined_header = "\n".join(header_stack)
+                sections.append(f"{combined_header}\n{part.strip()}")
+
     return sections

@@ -6,7 +6,7 @@ import json
 
 from ..models.inference import ModelInferenceManager
 from ..models.vectorization import SemanticVectorizer
-from ..utils.utils import split_markdown_by_headers
+from ..utils.utils import split_markdown_by_headers_with_hierarchy
 
 
 class QueryPipeline:
@@ -34,36 +34,46 @@ class QueryPipeline:
         # Check if content is directly provided, otherwise read from the path
         if markdown_content:
             # Directly use provided markdown content
-            self.embedder.texts = split_markdown_by_headers(markdown_content)
-            print(self.embedder.texts)
+            texts = split_markdown_by_headers_with_hierarchy(markdown_content)
         elif markdown_path:
             # Read and process markdown file if path is provided
-            self.embedder.read_and_process_markdown(markdown_path)
+            texts = self.embedder.read_and_process_markdown(markdown_path)
 
-        # Generate unique filenames for saving the index and texts
-        timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        index_filename = f"faiss_db_{timestamp}.bin"
-        texts_filename = f"faiss_db_{timestamp}.json"
+        total_cost = 0
+        total_documents_processed = 0
 
-        # Generate full file paths
-        index_path = (
-            os.path.join(directory_path, index_filename) if directory_path else None
-        )
-        texts_path = (
-            os.path.join(directory_path, texts_filename) if directory_path else None
-        )
+        # Iterate over each text chunk and process them individually
+        for i, text in enumerate(texts):
+            # Set the current text to the embedder
+            self.embedder.texts = [text]
+            
+            # Reset embeddings for each chunk
+            self.embedder.embeddings = []
 
-        # Generate embeddings and calculate the total cost
-        total_cost = self.embedder.generate_embeddings()
+            # Generate embeddings and calculate the cost for each chunk
+            cost = self.embedder.generate_embeddings()
 
-        # Save the index and texts if requested
-        if save_index and directory_path:
-            self.embedder.save_faiss_index(index_path, texts_path)
+            # Update the total cost
+            total_cost += cost
 
-        # Calculate the total documents processed
-        total_documents_processed = len(self.embedder.texts)
+            if save_index and directory_path:
+                # Generate unique filenames for saving the index and texts
+                timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+                index_filename = f"faiss_db_chunk_{i}_{timestamp}.bin"
+                texts_filename = f"faiss_db_chunk_{i}_{timestamp}.json"
+
+                # Generate full file paths
+                index_path = os.path.join(directory_path, index_filename)
+                texts_path = os.path.join(directory_path, texts_filename)
+
+                # Save the index and texts for each chunk
+                self.embedder.save_faiss_index(index_path, texts_path)
+
+            total_documents_processed += 1
 
         return total_cost, total_documents_processed
+
+
 
     def find_similar_documents(self, query_text, num_results):
         similar_docs = self.embedder.search_similar_sections(query_text, num_results)

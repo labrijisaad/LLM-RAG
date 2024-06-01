@@ -143,7 +143,6 @@ def initialize_rag_query_tab(
             "Select :green[number of documents] to include in the context",
             min_value=0,
             value=2,
-            max_value=total_docs_in_knowledge_base,
             step=1,
             help="Specify how many of the most relevant documents you want to include for generating the response. This helps in refining the context for more accurate answers.",
         )

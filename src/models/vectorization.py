@@ -69,12 +69,15 @@ class SemanticVectorizer:
 
     def generate_embeddings(self, save_index=False, index_path=None, texts_path=None):
         total_cost = 0
+        embeddings = []  # Local list to collect embeddings
+
         for text in tqdm(self.texts):
             embedding, usage = self.query_openai_embedding(text)
             if embedding is not None:
-                self.embeddings.append(embedding)
+                embeddings.append(embedding)
                 total_cost += self.calculate_cost(usage)
-        self.embeddings = np.array(self.embeddings)
+
+        self.embeddings = np.array(embeddings)  # Convert to numpy array
         self.create_faiss_index()
 
         if save_index and index_path:
